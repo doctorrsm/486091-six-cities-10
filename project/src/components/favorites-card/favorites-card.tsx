@@ -13,7 +13,7 @@ function FavoritesCard({offer}: Props): JSX.Element {
     <article className="favorites__card place-card">
       {offer.isPremium ? renderPremiumLabel() : ''}
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${offer.id}`}>
+        <Link to={generatePath(AppRoute.Room, {id: String(offer.id)})}>
           <img
             className="place-card__image"
             src={offer.previewImage}

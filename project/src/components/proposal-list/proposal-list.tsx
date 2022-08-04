@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PlaceCard from '../place-card/place-card';
 import {Offer} from '../../types/offers';
 
@@ -7,7 +7,9 @@ type Props = {
 };
 
 function ProposalList({offers}: Props): JSX.Element {
-  const [, setActiveCardId] = useState(0);
+
+
+  const [activeCardId, setActiveCardId] = useState(0);
 
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -15,6 +17,7 @@ function ProposalList({offers}: Props): JSX.Element {
         <PlaceCard
           offer={offer}
           key={offer.id}
+          isActive={offer.id === activeCardId}
           onMouseOver={() => {
             setActiveCardId(offer.id);
           }}

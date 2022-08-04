@@ -1,6 +1,8 @@
 import ProposalList from '../proposal-list/proposal-list';
+import {CardTypes} from '../../const'
 import {Offer} from '../../types/offers';
 import Map from '../map/map';
+import PlaceCardList from '../place-card-list/place-card-list';
 
 type Props = {
   placesCount: number;
@@ -29,7 +31,7 @@ function CitiesWithPlaces({placesCount, offers}: Props): JSX.Element {
           </ul>
         </form>
 
-        <ProposalList offers={offers} />
+        <PlaceCardList cardType={CardTypes.Cities} offers={offers} />
 
       </section>
       <div className="cities__right-section">

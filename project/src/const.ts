@@ -12,7 +12,7 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export enum Cities {
+export enum CityNames {
   FirstCity = 'Paris',
   SecondCity = 'Cologne',
   ThirdCity = 'Brussels',
@@ -22,6 +22,12 @@ export enum Cities {
 }
 
 export const cityList = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+
+export enum CardTypes {
+  Cities = 'cities',
+  Favorites = 'favorites',
+  NearPlaces = 'near-places'
+}
 
 export enum cardClassNames {
   PlaceCard = 'place-card',

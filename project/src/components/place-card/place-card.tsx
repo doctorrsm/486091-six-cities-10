@@ -1,24 +1,41 @@
-import { Link } from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
+import { generatePath } from 'react-router';
+
 import {Offer} from '../../types/offers';
 import {capitalizeFirstLetter, renderPremiumLabel} from '../../tools/tools';
 import Rating from '../rating/rating';
-import {cardClassNames} from '../../const';
+import {AppRoute, cardClassNames} from '../../const';
+import React from 'react';
 
 type Props = {
   offer: Offer;
+  isActive: boolean;
   onMouseOver?: () => void;
   onMouseOut?:() => void;
+  cardType?: string;
 }
 
-function PlaceCard({offer, onMouseOver, onMouseOut}: Props): JSX.Element {
+function PlaceCard({offer, isActive, onMouseOver, onMouseOut, cardType = 'cities'}: Props): JSX.Element {
+  const activeCardClassName = 'place-card_active';
+
+  const isCitiesCard = cardType === 'cities';
+  const isFavoritesCard = cardType === 'favorites';
+  const isNearPlaceCard = cardType === 'near-places';
 
   return (
-    <article className="cities__card place-card" onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
-      {offer.isPremium ? renderPremiumLabel() : ''}
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${offer.id}`} >
-          <img className="place-card__image" src={offer.previewImage} width="260" height="200"
-            alt="Place image"
+    <article
+      className={`${cardType}__card  place-card ${isActive ? activeCardClassName : ''}`}
+      onMouseOver={onMouseOver}
+      onMouseOut={onMouseOut}
+    >
+      {offer.isPremium &&
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>}
+      <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
+        <Link to={`${AppRoute.Room}/${offer.id}`} >
+          <img className="place-card__image" src={offer.previewImage} width={isFavoritesCard ? '150' : '260' } height={isFavoritesCard ? '110' : '200' }
+            alt={offer.title}
           />
         </Link>
       </div>
@@ -37,7 +54,7 @@ function PlaceCard({offer, onMouseOver, onMouseOut}: Props): JSX.Element {
         </div>
         <Rating rating={offer.rating} cardType={cardClassNames.PlaceCard} />
         <h2 className="place-card__name">
-          <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
+          <Link to={generatePath('/offer/:id', {id: String(offer.id)})}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{capitalizeFirstLetter(offer.type)}</p>
       </div>

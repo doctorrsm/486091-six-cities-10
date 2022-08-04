@@ -2,7 +2,7 @@ import React from 'react';
 
 function ReviewsForm() {
   const [formData, setFormData] = React.useState({
-    rating: '',
+    rating: 0,
     review: ''
   });
 
@@ -130,7 +130,7 @@ function ReviewsForm() {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled={!formData.review || !formData.rating}
         >
           Submit
         </button>

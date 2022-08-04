@@ -1,5 +1,6 @@
 import {Offer} from '../../types/offers';
 import FavoritesCard from '../favorites-card/favorites-card';
+import PlaceCard from '../place-card/place-card';
 
 type Props = {
   offers: Offer[],
@@ -19,7 +20,7 @@ function FavoritesListItem({offers, city}: Props) {
       <div className="favorites__places">
         {offers.map((offer:Offer) => {
           if (city === offer.city.name) {
-            return (<FavoritesCard offer={offer} key={offer.id} />);
+            return (<PlaceCard offer={offer} key={offer.id} cardType={'favorites'} isActive={false}/>);
           }
         })}
       </div>

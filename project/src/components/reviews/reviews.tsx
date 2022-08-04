@@ -7,13 +7,16 @@ type ReviewsProps = {
 }
 
 function Reviews({reviews}: ReviewsProps) {
+  const reviewsAmount = reviews.length;
   return (
     <section className="property__reviews reviews">
       <h2 className="reviews__title">
-        Reviews · <span className="reviews__amount">1</span>
+        Reviews · <span className="reviews__amount">{reviewsAmount}</span>
       </h2>
       <ul className="reviews__list">
-        <ReviewsItem review={reviews[1]} />
+        {reviews.map((review) =>
+          <ReviewsItem key={review.id} review={review} />
+        )}
       </ul>
       <ReviewsForm />
     </section>
