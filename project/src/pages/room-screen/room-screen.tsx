@@ -10,20 +10,17 @@ import List from '../../components/list/list';
 import PremiumLabel from '../../components/premium-label/premium-label';
 import Reviews from '../../components/reviews/reviews';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
+import {useAppSelector} from '../../hooks';
 
-type RoomScreenProps = {
-  offers: Offer[],
-  reviews: Review[]
-}
-
-function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
+function RoomScreen(): JSX.Element {
   const params = useParams();
+
+  const offers = useAppSelector((state) => state.offers);
+  const reviews = useAppSelector((state) => state.reviews);
   const offer = offers.find((item) => item.id === Number(params.id));
+  const reviewList = reviews.find((item) => item.id === Number(params.id));
 
-
-  console.log(params)
-  console.log(offer)
-  if(offer === undefined) {
+  if(!offer) {
     return (<PageNotFoundScreen />);
   }
   return (
@@ -100,7 +97,7 @@ function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
                   </p>
                 </div>
               </div>
-              <Reviews reviews={reviews}/>
+              <Reviews reviews={reviewList}/>
             </div>
           </div>
           <section className="property__map map" />

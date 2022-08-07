@@ -6,34 +6,31 @@ import RoomScreen from '../../pages/room-screen/room-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import PageNotFoundScreen from '../../pages/page-not-found-screen/page-not-found-screen';
 import PrivateRoute from '../private-route/private-route';
-import {Offer, Review} from '../../types/offers';
+import ScrollToTop from '../scroll-to-top/scroll-to-top';
 
 
-type AppScreenProps = {
-  placesCount: number;
-  offers: Offer[];
-  reviews: Review[];
-}
+function App(): JSX.Element {
 
-function App({placesCount, offers, reviews}: AppScreenProps): JSX.Element {
+
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainScreen placesCount={placesCount} offers={offers} />}
+          element={<MainScreen />}
         />
         <Route
           path={AppRoute.Favorites}
           element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <FavoritesScreen offers={offers}/>
+              <FavoritesScreen />
             </PrivateRoute>
           }
         />
         <Route
           path={AppRoute.Room}
-          element={<RoomScreen offers={offers} reviews={reviews}/>}
+          element={<RoomScreen />}
         />
         <Route
           path={AppRoute.Login}

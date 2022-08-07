@@ -7,3 +7,8 @@ export const changeCurrentCity = createAction('offers/changeCurrentCity', (value
 export const loadOffers = createAction('offers/loadOffers', (value) => ({
   payload: value
 }));
+
+export const loadReviews = createAction('offers/loadReviews', (value) => ({
+  payload: value
+}));
+

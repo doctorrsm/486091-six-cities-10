@@ -1,20 +1,26 @@
 import ProposalList from '../proposal-list/proposal-list';
-import {CardTypes} from '../../const'
+import {Navigate} from 'react-router-dom';
+import {AppRoute, CardTypes} from '../../const';
 import {Offer} from '../../types/offers';
 import Map from '../map/map';
 import PlaceCardList from '../place-card-list/place-card-list';
+import {useAppSelector} from '../../hooks';
+import { useNavigate} from 'react-router-dom';
 
-type Props = {
-  placesCount: number;
-  offers: Offer[];
-}
+function CitiesWithPlaces(): JSX.Element {
 
-function CitiesWithPlaces({placesCount, offers}: Props): JSX.Element {
+  const navigate = useNavigate();
+
+  const currentCity = useAppSelector((state) => state.currentCity);
+  const offers = useAppSelector((state) => state.offers);
+  const filteredByNameOffers = offers.filter((offer) => offer.city.name === currentCity);
+  const placesCount = filteredByNameOffers ? filteredByNameOffers.length : 0;
+
   return(
     <div className="cities__places-container container">
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
-        <b className="places__found">{placesCount} places to stay in Amsterdam</b>
+        <b className="places__found">{placesCount} places to stay in {currentCity}</b>
         <form className="places__sorting" action="#" method="get">
           <span className="places__sorting-caption">Sort by</span>
           <span className="places__sorting-type" tabIndex={0}>
@@ -31,7 +37,7 @@ function CitiesWithPlaces({placesCount, offers}: Props): JSX.Element {
           </ul>
         </form>
 
-        <PlaceCardList cardType={CardTypes.Cities} offers={offers} />
+        <PlaceCardList cardType={CardTypes.Cities} offers={filteredByNameOffers} />
 
       </section>
       <div className="cities__right-section">

@@ -1,7 +1,7 @@
 import {Offer} from '../../types/offers';
 import React, {useState} from 'react';
 import PlaceCard from '../place-card/place-card';
-import {cityList} from '../../const';
+import {Cities} from '../../const';
 import FavoritesListItem from '../favorites-list-item/favorites-list-item';
 
 type PlaceCardProps = {
@@ -37,7 +37,7 @@ function PlaceCardList({offers, cardType}: PlaceCardProps): JSX.Element {
       {isFavoritesCard &&
         <ul className="favorites__list">
           {
-            cityList.map((cityName) => (<FavoritesListItem offers={offers} key={cityName} city={cityName} />))
+            Cities.map((city) => (<FavoritesListItem offers={offers} key={city.name} city={city.name} />))
           }
         </ul>}
 
