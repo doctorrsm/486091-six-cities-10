@@ -21,7 +21,16 @@ export enum CityNames {
   SixthCity = 'Dusseldorf'
 }
 
-export const Cities = [{name: 'Paris'}, {name: 'Cologne'}, {name: 'Brussels'}, {name: 'Amsterdam'}, {name: 'Hamburg'}, {name: 'Dusseldorf'}];
+export const Cities = {
+  Paris: 'Paris',
+  Cologne: 'Cologne',
+  Brussels: 'Brussels',
+  Amsterdam: 'Amsterdam',
+  Hamburg: 'Hamburg',
+  Dusseldorf: 'Dusseldorf'
+} as const;
+
+export const cityList = Object.keys(Cities);
 
 export enum CardTypes {
   Cities = 'cities',
@@ -56,6 +65,14 @@ export const PageAttributes = {
     'BodyClassName': 'page page--gray page--login',
   }
 } as const;
+
+export const SortTypes = {
+  Default: 'Popular',
+  PriceLowToHigh: 'Price: low to high',
+  PriceHighToLow: 'Price: high to low',
+  TopRatingFirst: 'Top rated first'
+} as const;
+
 
 export const URL_MARKER_DEFAULT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
 

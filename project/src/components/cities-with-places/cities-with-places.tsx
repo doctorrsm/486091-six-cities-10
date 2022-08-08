@@ -1,12 +1,9 @@
-import ProposalList from '../proposal-list/proposal-list';
-import {Navigate} from 'react-router-dom';
-import {AppRoute, CardTypes} from '../../const';
-import {Offer} from '../../types/offers';
+import {CardTypes} from '../../const';
 import Map from '../map/map';
 import PlaceCardList from '../place-card-list/place-card-list';
 import {useAppSelector} from '../../hooks';
 import { useNavigate} from 'react-router-dom';
-import SortFilter from '../sort filter/sort-filter';
+import SortFilter from '../sort-filter/sort-filter';
 
 function CitiesWithPlaces(): JSX.Element {
 
@@ -22,7 +19,7 @@ function CitiesWithPlaces(): JSX.Element {
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
         <b className="places__found">{placesCount} places to stay in {currentCity}</b>
-       <SortFilter />
+        <SortFilter />
 
         <PlaceCardList cardType={CardTypes.Cities} offers={filteredByNameOffers} />
 

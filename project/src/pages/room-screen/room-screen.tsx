@@ -17,12 +17,19 @@ function RoomScreen(): JSX.Element {
 
   const offers = useAppSelector((state) => state.offers);
   const reviews = useAppSelector((state) => state.reviews);
-  const offer = offers.find((item) => item.id === Number(params.id));
-  const reviewList = reviews.find((item) => item.id === Number(params.id));
 
-  if(!offer) {
+
+  if(!offers) {
     return (<PageNotFoundScreen />);
   }
+  const offer: Offer | undefined = offers.find((item: Offer) => item.id === Number(params.id));
+
+  if(offer === undefined) {
+    return (<PageNotFoundScreen />);
+  }
+  const reviewList = reviews.filter((item: Review) => item.id === Number(params.id));
+
+
   return (
     <div className="page">
       <Header />
@@ -97,7 +104,7 @@ function RoomScreen(): JSX.Element {
                   </p>
                 </div>
               </div>
-              <Reviews reviews={reviewList}/>
+              {reviewList.length > 0 && <Reviews reviews={reviewList}/>}
             </div>
           </div>
           <section className="property__map map" />
