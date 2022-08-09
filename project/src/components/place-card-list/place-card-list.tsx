@@ -1,8 +1,10 @@
 import {Offer} from '../../types/offers';
-import React, {useState} from 'react';
+import React from 'react';
 import PlaceCard from '../place-card/place-card';
 import {Cities} from '../../const';
 import FavoritesListItem from '../favorites-list-item/favorites-list-item';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {setHoveredCard} from '../../store/action';
 
 type PlaceCardProps = {
   offers: Offer[],
@@ -15,7 +17,8 @@ function PlaceCardList({offers, cardType}: PlaceCardProps): JSX.Element {
   const isFavoritesCard = cardType === 'favorites';
   const isNearPlaceCard = cardType === 'near-places';
 
-  const [activeCardId, setActiveCardId] = useState(0);
+  const dispatch = useAppDispatch();
+  const activeCardId = useAppSelector((state) => state.activeCardId);
 
   return (
     <>
@@ -26,10 +29,8 @@ function PlaceCardList({offers, cardType}: PlaceCardProps): JSX.Element {
               offer={offer}
               key={offer.id}
               isActive={offer.id === activeCardId}
-              onMouseOver={() => {
-                setActiveCardId(offer.id);
-              }}
-              onMouseOut={() => setActiveCardId(0)}
+              onMouseOver={() => dispatch(setHoveredCard(offer.id))}
+              onMouseOut={() => dispatch(setHoveredCard(0))}
             />
           ))}
         </div>}
@@ -48,10 +49,8 @@ function PlaceCardList({offers, cardType}: PlaceCardProps): JSX.Element {
               offer={offer}
               key={offer.id}
               isActive={offer.id === activeCardId}
-              onMouseOver={() => {
-                setActiveCardId(offer.id);
-              }}
-              onMouseOut={() => setActiveCardId(0)}
+              onMouseOver={() => dispatch(setHoveredCard(offer.id))}
+              onMouseOut={() => dispatch(setHoveredCard(0))}
             />
           ))}
         </div>}

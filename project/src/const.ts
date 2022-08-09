@@ -1,3 +1,6 @@
+export const URL_MARKER_DEFAULT = 'img/pin.svg';
+export const URL_MARKER_ACTIVE = 'img/pin-active.svg';
+
 export enum AppRoute {
   Favorites = '/favorites',
   Room = '/offer/:id',
@@ -73,7 +76,9 @@ export const SortTypes = {
   TopRatingFirst: 'Top rated first'
 } as const;
 
+export const APIRoute = {
+  Offers: '/hotels',
+  Login: '/login',
+  Logout: '/logout',
+} as const;
 
-export const URL_MARKER_DEFAULT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
-
-export const URL_MARKER_CURRENT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';

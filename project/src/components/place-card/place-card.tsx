@@ -17,11 +17,7 @@ type Props = {
 
 function PlaceCard({offer, isActive, onMouseOver, onMouseOut, cardType = 'cities'}: Props): JSX.Element {
   const activeCardClassName = 'place-card_active';
-
-  const isCitiesCard = cardType === 'cities';
   const isFavoritesCard = cardType === 'favorites';
-  const isNearPlaceCard = cardType === 'near-places';
-
   return (
     <article
       className={`${cardType}__card  place-card ${isActive ? activeCardClassName : ''}`}
@@ -54,7 +50,7 @@ function PlaceCard({offer, isActive, onMouseOver, onMouseOut, cardType = 'cities
         </div>
         <Rating rating={offer.rating} cardType={cardClassNames.PlaceCard} />
         <h2 className="place-card__name">
-          <Link to={generatePath('/offer/:id', {id: String(offer.id)})}>{offer.title}</Link>
+          <Link to={`Offer/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{capitalizeFirstLetter(offer.type)}</p>
       </div>

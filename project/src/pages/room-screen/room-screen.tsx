@@ -16,6 +16,7 @@ function RoomScreen(): JSX.Element {
   const params = useParams();
 
   const offers = useAppSelector((state) => state.offers);
+  const nearbyOffers = useAppSelector((state) => state.nearbyOffers);
   const reviews = useAppSelector((state) => state.reviews);
 
 

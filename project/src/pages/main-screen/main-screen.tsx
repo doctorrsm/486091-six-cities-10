@@ -1,7 +1,5 @@
 import Locations from '../../components/locations/locations';
 import Layout from '../../components/layout/layout';
-import {offers as mockOffers} from '../../mocks/offers';
-import {reviews as mockReviews} from '../../mocks/reviews';
 import { PageAttributes} from '../../const';
 import CitiesWithPlaces from '../../components/cities-with-places/cities-with-places';
 import CitiesNoPlaces from '../../components/cities-no-places/cities-no-places';
@@ -10,13 +8,6 @@ import {loadOffers, loadReviews} from '../../store/action';
 import {useEffect} from 'react';
 
 function MainScreen(): JSX.Element {
-
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(loadOffers(mockOffers));
-    dispatch(loadReviews(mockReviews));
-  }, [dispatch]);
 
   const currentCity = useAppSelector((state) => state.currentCity);
   const offers = useAppSelector((state) => state.offers);
