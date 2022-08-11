@@ -1,10 +1,9 @@
-import {Link, NavLink} from 'react-router-dom';
-import { generatePath } from 'react-router';
+import {Link} from 'react-router-dom';
 
 import {Offer} from '../../types/offers';
-import {capitalizeFirstLetter, renderPremiumLabel} from '../../tools/tools';
+import {capitalizeFirstLetter} from '../../tools/tools';
 import Rating from '../rating/rating';
-import {AppRoute, cardClassNames} from '../../const';
+import {cardClassNames} from '../../const';
 import React from 'react';
 
 type Props = {
@@ -29,7 +28,7 @@ function PlaceCard({offer, isActive, onMouseOver, onMouseOut, cardType = 'cities
           <span>Premium</span>
         </div>}
       <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
-        <Link to={`${AppRoute.Room}/${offer.id}`} >
+        <Link to={`/Offer/${offer.id}`} >
           <img className="place-card__image" src={offer.previewImage} width={isFavoritesCard ? '150' : '260' } height={isFavoritesCard ? '110' : '200' }
             alt={offer.title}
           />
@@ -50,7 +49,7 @@ function PlaceCard({offer, isActive, onMouseOver, onMouseOut, cardType = 'cities
         </div>
         <Rating rating={offer.rating} cardType={cardClassNames.PlaceCard} />
         <h2 className="place-card__name">
-          <Link to={`Offer/${offer.id}`}>{offer.title}</Link>
+          <Link to={`/Offer/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{capitalizeFirstLetter(offer.type)}</p>
       </div>

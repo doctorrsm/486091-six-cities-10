@@ -1,11 +1,11 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {
-  changeCurrentCity,
+  changeCurrentCity, loadNearbyOffers, loadOffer,
   loadOffers,
   loadReviews,
   requireAuthorization,
   setDataLoadedStatus,
-  setHoveredCard
+  setHoveredCard, setOfferLoadedStatus, setUserInfo
 } from './action';
 import {Offer, Review} from '../types/offers';
 import {AuthorizationStatus, Cities, SortTypes} from '../const';
@@ -17,12 +17,21 @@ type InitialStateType = {
   activeCardId: number;
   filteredOffers: [],
   reviews: Review[],
-  nearbyOffers: [],
+  nearbyOffers: Offer[],
   sortType: string,
   authorizationStatus: AuthorizationStatus,
   isDataLoaded: boolean,
+  isOfferLoaded: boolean,
   error: string | null,
   userEmail: string;
+  user?: null | {
+    id: number,
+    email: string,
+    name: string,
+    avatarUrl: string,
+    isPro: boolean | null,
+    token: string,
+  }
 };
 
 
@@ -37,8 +46,10 @@ const initialState: InitialStateType = {
   sortType: SortTypes.Default,
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
+  isOfferLoaded: false,
   error: null,
   userEmail: '',
+  user: null
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -46,8 +57,14 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(changeCurrentCity,(state, action) => {
       state.currentCity = action.payload;
     })
+    .addCase(loadOffer, (state, action) => {
+      state.currentOffer = action.payload;
+    })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
+    })
+    .addCase(loadNearbyOffers, (state, action) => {
+      state.nearbyOffers = action.payload;
     })
     .addCase(setHoveredCard, (state, action) => {
       state.activeCardId = action.payload;
@@ -57,6 +74,12 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setDataLoadedStatus, (state, action) => {
       state.isDataLoaded = action.payload;
+    })
+    .addCase(setOfferLoadedStatus, (state, action) => {
+      state.isOfferLoaded = action.payload;
+    })
+    .addCase(setUserInfo, (state, action) => {
+      state.user = action.payload;
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;

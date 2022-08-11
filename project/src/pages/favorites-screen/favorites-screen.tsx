@@ -7,12 +7,13 @@ import {useAppSelector} from '../../hooks';
 
 function FavoritesScreen(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
   return (
     <div className={`page ${offers ? '' : 'favorites--empty'}`}>
       <Header />
       <main className={`page__main page__main--favorites ${offers ? '' : 'page__main--favorites-empty'}`}>
         <div className="page__favorites-container container">
-          {offers ? <FavoritesList offers={offers}/> : <FavoritesEmpty />}
+          {favoriteOffers.length > 0 ? <FavoritesList offers={favoriteOffers}/> : <FavoritesEmpty />}
         </div>
       </main>
       <Footer />

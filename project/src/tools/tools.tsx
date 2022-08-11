@@ -1,3 +1,5 @@
+import {Review} from '../types/offers';
+
 export const capitalizeFirstLetter = (string: string) => string.charAt(0).toUpperCase() + string.slice(1);
 
 export const renderPremiumLabel = (): JSX.Element => (
@@ -23,4 +25,6 @@ export const renderRatingWidth = (rating: number): { width: string } => {
       return {width: '0%'};
   }
 };
+
+export const sortReviewsByDate = (first:Review, second:Review) => Number(new Date(second.date)) - Number(new Date(first.date));
 

@@ -1,20 +1,40 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {sendReviewAction} from '../../store/api-actions';
+import {useAppDispatch} from '../../hooks';
+import {useParams} from 'react-router-dom';
+
+const MIN_REVIEW_LENGTH = 50;
+const MAX_REVIEW_LENGTH = 300;
 
 function ReviewsForm() {
   const [formData, setFormData] = React.useState({
+    review: '',
     rating: 0,
-    review: ''
   });
+
+  const dispatch = useAppDispatch();
+  const params = useParams();
+
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const fieldChangeHandle = (evt: { target: { name: string; value: string; }; }) => {
     const {name, value} = evt.target;
     setFormData({...formData, [name]: value});
   };
+
+  const handleSubmit = (evt: React.FormEvent) => {
+    evt.preventDefault();
+    setIsDisabled(true);
+    dispatch(sendReviewAction({ id: Number(params.id), comment: formData.review, rating: formData.rating }));
+    setFormData({review: '', rating: 0});
+  };
+
+
   return (
     <form
       className="reviews__form form"
       action="#" method="post"
-      onSubmit={(evt) => {evt.preventDefault();}}
+      onSubmit={handleSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
@@ -22,7 +42,6 @@ function ReviewsForm() {
       <div className="reviews__rating-form form__rating">
         <input
           onChange={fieldChangeHandle}
-          value="5"
           className="form__rating-input visually-hidden"
           name="rating"
           defaultValue={5}
@@ -40,7 +59,6 @@ function ReviewsForm() {
         </label>
         <input
           onChange={fieldChangeHandle}
-          value="4"
           className="form__rating-input visually-hidden"
           name="rating"
           defaultValue={4}
@@ -58,7 +76,6 @@ function ReviewsForm() {
         </label>
         <input
           onChange={fieldChangeHandle}
-          value="3"
           className="form__rating-input visually-hidden"
           name="rating"
           defaultValue={3}
@@ -76,7 +93,6 @@ function ReviewsForm() {
         </label>
         <input
           onChange={fieldChangeHandle}
-          value="2"
           className="form__rating-input visually-hidden"
           name="rating"
           defaultValue={2}
@@ -94,7 +110,6 @@ function ReviewsForm() {
         </label>
         <input
           onChange={fieldChangeHandle}
-          value="1"
           className="form__rating-input visually-hidden"
           name="rating"
           defaultValue={1}
@@ -113,12 +128,11 @@ function ReviewsForm() {
       </div>
       <textarea
         onChange={fieldChangeHandle}
-        value={formData.review}
         className="reviews__textarea form__textarea"
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        defaultValue={''}
+        defaultValue={formData.review}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -130,7 +144,7 @@ function ReviewsForm() {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!formData.review || !formData.rating}
+          disabled={isDisabled && (formData.review.length < MIN_REVIEW_LENGTH || formData.review.length > MAX_REVIEW_LENGTH || !formData.rating)}
         >
           Submit
         </button>

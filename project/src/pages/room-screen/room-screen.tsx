@@ -1,7 +1,5 @@
 import Gallery from '../../components/gallery/gallery';
 import { useParams } from 'react-router-dom';
-import {Offer, Review} from '../../types/offers';
-import PageNotFoundScreen from '../page-not-found-screen/page-not-found-screen';
 import Header from '../../components/header/header';
 import Rating from '../../components/rating/rating';
 import {cardClassNames, CardTypes} from '../../const';
@@ -10,26 +8,35 @@ import List from '../../components/list/list';
 import PremiumLabel from '../../components/premium-label/premium-label';
 import Reviews from '../../components/reviews/reviews';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
-import {useAppSelector} from '../../hooks';
+import Map from '../../components/map/map';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {
+  fetchNearbyOffersAction,
+  fetchOfferAction, fetchReviewsAction
+} from '../../store/api-actions';
+import {useEffect} from 'react';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 function RoomScreen(): JSX.Element {
   const params = useParams();
+  const dispatch = useAppDispatch();
 
-  const offers = useAppSelector((state) => state.offers);
+  useEffect(() => {
+    dispatch(fetchOfferAction(Number((params.id))));
+    dispatch(fetchNearbyOffersAction(String(params.id)));
+    dispatch(fetchReviewsAction(String(params.id)));
+  }, [dispatch, params.id]);
+
+  const offer = useAppSelector((state) => state.currentOffer);
   const nearbyOffers = useAppSelector((state) => state.nearbyOffers);
   const reviews = useAppSelector((state) => state.reviews);
+  const isOfferLoaded = useAppSelector((state) => state.isOfferLoaded);
 
-
-  if(!offers) {
-    return (<PageNotFoundScreen />);
+  if (!isOfferLoaded || !offer) {
+    return (
+      <LoadingScreen />
+    );
   }
-  const offer: Offer | undefined = offers.find((item: Offer) => item.id === Number(params.id));
-
-  if(offer === undefined) {
-    return (<PageNotFoundScreen />);
-  }
-  const reviewList = reviews.filter((item: Review) => item.id === Number(params.id));
-
 
   return (
     <div className="page">
@@ -105,17 +112,17 @@ function RoomScreen(): JSX.Element {
                   </p>
                 </div>
               </div>
-              {reviewList.length > 0 && <Reviews reviews={reviewList}/>}
+              {reviews.length > 0 && <Reviews reviews={reviews}/>}
             </div>
           </div>
-          <section className="property__map map" />
+          <Map currentCity={offer.city} points={nearbyOffers}/>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">
                 Other places in the neighbourhood
             </h2>
-            <PlaceCardList offers={ offers} cardType={CardTypes.Cities} />
+            <PlaceCardList offers={ nearbyOffers} cardType={CardTypes.Cities} />
           </section>
         </div>
       </main>

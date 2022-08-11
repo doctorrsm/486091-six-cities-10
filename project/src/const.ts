@@ -15,6 +15,12 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export enum HTTP_CODE {
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  NOT_FOUND = 404,
+}
+
 export enum CityNames {
   FirstCity = 'Paris',
   SecondCity = 'Cologne',
@@ -80,5 +86,6 @@ export const APIRoute = {
   Offers: '/hotels',
   Login: '/login',
   Logout: '/logout',
+  Reviews: '/comments',
 } as const;
 

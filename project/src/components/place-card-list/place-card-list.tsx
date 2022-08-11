@@ -1,8 +1,6 @@
 import {Offer} from '../../types/offers';
 import React from 'react';
 import PlaceCard from '../place-card/place-card';
-import {Cities} from '../../const';
-import FavoritesListItem from '../favorites-list-item/favorites-list-item';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {setHoveredCard} from '../../store/action';
 
@@ -37,9 +35,9 @@ function PlaceCardList({offers, cardType}: PlaceCardProps): JSX.Element {
 
       {isFavoritesCard &&
         <ul className="favorites__list">
-          {
-            Cities.map((city) => (<FavoritesListItem offers={offers} key={city.name} city={city.name} />))
-          }
+          {/*{*/}
+          {/*  Cities.map((city) => (<FavoritesListItem offers={offers} key={city.name} city={city.name} />))*/}
+          {/*}*/}
         </ul>}
 
       {isNearPlaceCard &&

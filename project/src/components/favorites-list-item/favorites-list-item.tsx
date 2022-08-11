@@ -1,5 +1,4 @@
 import {Offer} from '../../types/offers';
-import FavoritesCard from '../favorites-card/favorites-card';
 import PlaceCard from '../place-card/place-card';
 
 type Props = {

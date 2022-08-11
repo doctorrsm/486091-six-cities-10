@@ -1,5 +1,5 @@
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {Cities, cityList} from '../../const';
+import {cityList} from '../../const';
 import {changeCurrentCity} from '../../store/action';
 
 function Locations(): JSX.Element {

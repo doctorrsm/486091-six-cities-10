@@ -6,7 +6,7 @@ import GuestNavigation from '../guest-navigation/guest-navigation';
 
 function Header(): JSX.Element {
   const {authorizationStatus} = useAppSelector((state) => state);
-
+  const { user} = useAppSelector((state) => state);
   return (
     <header className="header">
       <div className="container">
@@ -16,7 +16,7 @@ function Header(): JSX.Element {
           </div>
           <nav className="header__nav">
             <ul className="header__nav-list">
-              {authorizationStatus === AuthorizationStatus.Auth
+              {((authorizationStatus === AuthorizationStatus.Auth) && (user !== null))
                 ? <UserNavigation />
                 : <GuestNavigation />}
             </ul>

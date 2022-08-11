@@ -4,6 +4,7 @@ import App from './components/app/app';
 import {Provider} from 'react-redux';
 import {store} from './store';
 import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {checkAuthAction, fetchQuestionAction} from './store/api-actions';
 
 store.dispatch(fetchQuestionAction());
@@ -16,7 +17,17 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ToastContainer />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <App />
     </Provider>
   </React.StrictMode>,
