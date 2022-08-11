@@ -28,9 +28,7 @@ function ReviewsItem({review}: ReviewsItemType) {
       <div className="reviews__info">
         <Rating rating={review.rating} cardType={'reviews'} />
         <p className="reviews__text">
-          A quiet cozy and picturesque that hides behind a a river
-          by the unique lightness of Amsterdam. The building is
-          green and from 18th century.
+          {review.comment}
         </p>
         <time className="reviews__time" dateTime={dateTime}>
           {humanDate}

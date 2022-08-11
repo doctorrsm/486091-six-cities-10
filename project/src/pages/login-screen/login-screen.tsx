@@ -1,31 +1,47 @@
-import {Link, useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {FormEvent, useRef} from 'react';
 import { useAppDispatch } from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
+import {toast} from 'react-toastify';
+
+const passwordRegExp = new RegExp(/(?=.*[0-9])(?=.*[A-Za-z])[0-9A-Za-z]{2,}/);
 
 function LoginScreen(): JSX.Element {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
-  }
+  };
+
+  const passwordValidation = (password: string) => {
+    if (password === '') {
+      toast.warn('Password cannot be empty');
+      return false;
+    }
+    if (!passwordRegExp.test(`${password}`.toLowerCase())) {
+      toast.warn('Password must contain letters and numbers');
+      return false;
+    } else {
+
+      return true;
+    }
+  };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (emailRef.current !== null && passwordRef.current !== null) {
+    if (emailRef.current !== null && passwordRef.current !== null && passwordValidation(passwordRef.current.value)) {
       onSubmit({
         email: emailRef.current.value,
         password: passwordRef.current.value,
-      })
+      });
     }
-  }
+  };
 
   return (
 
