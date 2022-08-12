@@ -75,12 +75,12 @@ export const PageAttributes = {
   }
 } as const;
 
-export const SortTypes = {
-  Default: 'Popular',
-  PriceLowToHigh: 'Price: low to high',
-  PriceHighToLow: 'Price: high to low',
-  TopRatingFirst: 'Top rated first'
-} as const;
+export enum SortTypes {
+  Default = 'Popular',
+  PriceLowToHigh = 'Price: low to high',
+  PriceHighToLow = 'Price: high to low',
+  TopRatingFirst ='Top rated first'
+}
 
 export const APIRoute = {
   Offers: '/hotels',
@@ -88,4 +88,9 @@ export const APIRoute = {
   Logout: '/logout',
   Reviews: '/comments',
 } as const;
+
+export const FORM_DATA_INIT_STATE = {
+  review: '',
+  rating: 0,
+};
 

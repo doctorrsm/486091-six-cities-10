@@ -1,4 +1,5 @@
-import {Review} from '../types/offers';
+import {Offer, Review} from '../types/offers';
+import {SortTypes} from '../const';
 
 export const capitalizeFirstLetter = (string: string) => string.charAt(0).toUpperCase() + string.slice(1);
 
@@ -28,3 +29,15 @@ export const renderRatingWidth = (rating: number): { width: string } => {
 
 export const sortReviewsByDate = (first:Review, second:Review) => Number(new Date(second.date)) - Number(new Date(first.date));
 
+export const sortOffers = (offers: Offer[], SortType: SortTypes) => {
+  switch (SortType) {
+    case SortTypes.PriceLowToHigh:
+      return offers.sort((a, b) => a.price - b.price);
+    case SortTypes.PriceHighToLow:
+      return offers.sort((a, b) => b.price - a.price);
+    case SortTypes.TopRatingFirst:
+      return offers.sort((a, b) => b.rating - a.rating);
+    default:
+      return offers;
+  }
+};

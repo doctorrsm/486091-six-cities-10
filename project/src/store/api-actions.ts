@@ -1,7 +1,7 @@
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state';
-import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
+import {APIRoute, AppRoute, AuthorizationStatus, FORM_DATA_INIT_STATE} from '../const';
 import {Offer, Review} from '../types/offers';
 import {
   loadNearbyOffers,
@@ -78,10 +78,12 @@ export const sendReviewAction = createAsyncThunk<void, ReviewData, {
   extra: AxiosInstance
 }>(
   'data/sendReview',
-  async ({id, comment, rating}, {dispatch, extra: api}) => {
+  async ({id, comment, rating, setFormData, setIsDisabled}, {dispatch, extra: api}) => {
     try {
       await api.post<Review>(`${APIRoute.Reviews}/${id}`, {comment, rating});
       dispatch(fetchReviewsAction(String(id)));
+      setFormData(FORM_DATA_INIT_STATE);
+      setIsDisabled(true);
     } catch(err) {
       if (err instanceof Error) {
         toast.warn( `${err.name}: ${err.message}`);
@@ -89,6 +91,11 @@ export const sendReviewAction = createAsyncThunk<void, ReviewData, {
       else {
         toast.warn('Невозможно отправить комментарий');
       }
+      setIsDisabled(false);
+      setFormData({
+        review: comment,
+        rating: rating,
+      });
     }
   },
 );

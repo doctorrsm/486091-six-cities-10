@@ -2,16 +2,13 @@ import React, {useState} from 'react';
 import {sendReviewAction} from '../../store/api-actions';
 import {useAppDispatch} from '../../hooks';
 import {useParams} from 'react-router-dom';
+import {FORM_DATA_INIT_STATE} from '../../const';
 
 const MIN_REVIEW_LENGTH = 50;
 const MAX_REVIEW_LENGTH = 300;
 
 function ReviewsForm() {
-  const [formData, setFormData] = React.useState({
-    review: '',
-    rating: 0,
-  });
-
+  const [formData, setFormData] = useState(FORM_DATA_INIT_STATE);
   const dispatch = useAppDispatch();
   const params = useParams();
 
@@ -25,8 +22,7 @@ function ReviewsForm() {
   const handleSubmit = (evt: React.FormEvent) => {
     evt.preventDefault();
     setIsDisabled(true);
-    dispatch(sendReviewAction({ id: Number(params.id), comment: formData.review, rating: formData.rating }));
-    setFormData({review: '', rating: 0});
+    dispatch(sendReviewAction({ id: Number(params.id), comment: formData.review, rating: formData.rating, setFormData, setIsDisabled}));
   };
 
 

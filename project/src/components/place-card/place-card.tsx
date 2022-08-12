@@ -14,7 +14,7 @@ type Props = {
   cardType?: string;
 }
 
-function PlaceCard({offer, isActive, onMouseOver, onMouseOut, cardType = 'cities'}: Props): JSX.Element {
+function PlaceCard({offer, isActive, onMouseOver, onMouseOut, cardType}: Props): JSX.Element {
   const activeCardClassName = 'place-card_active';
   const isFavoritesCard = cardType === 'favorites';
   return (

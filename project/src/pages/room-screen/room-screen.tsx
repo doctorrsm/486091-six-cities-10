@@ -122,7 +122,7 @@ function RoomScreen(): JSX.Element {
             <h2 className="near-places__title">
                 Other places in the neighbourhood
             </h2>
-            <PlaceCardList offers={ nearbyOffers} cardType={CardTypes.Cities} />
+            <PlaceCardList offers={ nearbyOffers} cardType={CardTypes.NearPlaces} />
           </section>
         </div>
       </main>

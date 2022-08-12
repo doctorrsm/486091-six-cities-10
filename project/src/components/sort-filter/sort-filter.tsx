@@ -1,9 +1,23 @@
 import {useState} from 'react';
+import {SortTypes} from '../../const';
 
-function SortFilter():JSX.Element {
+type Props = {
+  setSelectedSortValue: (value: SortTypes) => void,
+  selectedSortValue: SortTypes,
+}
+
+function SortFilter({setSelectedSortValue, selectedSortValue}: Props):JSX.Element {
   const [isOpen, changeOpenStatus] = useState(false);
   const handleToggleFormClick = () => {
     changeOpenStatus(!isOpen);
+  };
+
+  const handleFilterClick = (evt: React.MouseEvent<HTMLLIElement>) => {
+    evt.preventDefault();
+    const target = evt.target as HTMLElement;
+    changeOpenStatus(!isOpen);
+
+    setSelectedSortValue(target.textContent as SortTypes);
   };
 
 
@@ -17,10 +31,10 @@ function SortFilter():JSX.Element {
         </svg>
       </span>
       <ul className={`places__options places__options--custom ${isOpen ? 'places__options--opened' : ''}`}>
-        <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-        <li className="places__option" tabIndex={0}>Price: low to high</li>
-        <li className="places__option" tabIndex={0}>Price: high to low</li>
-        <li className="places__option" tabIndex={0}>Top rated first</li>
+        <li className={`places__option ${SortTypes.Default === selectedSortValue ? 'places__option--active' : null}`} tabIndex={0} onClick={handleFilterClick}>{SortTypes.Default}</li>
+        <li className={`places__option ${SortTypes.PriceHighToLow === selectedSortValue ? 'places__option--active' : null}`} tabIndex={0} onClick={handleFilterClick}>{SortTypes.PriceHighToLow}</li>
+        <li className={`places__option ${SortTypes.PriceLowToHigh === selectedSortValue ? 'places__option--active' : null}`} tabIndex={0} onClick={handleFilterClick}>{SortTypes.PriceLowToHigh}</li>
+        <li className={`places__option ${SortTypes.TopRatingFirst === selectedSortValue ? 'places__option--active' : null}`} tabIndex={0} onClick={handleFilterClick}>{SortTypes.TopRatingFirst}</li>
       </ul>
     </form>
   )

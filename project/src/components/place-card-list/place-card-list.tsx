@@ -3,6 +3,7 @@ import React from 'react';
 import PlaceCard from '../place-card/place-card';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {setHoveredCard} from '../../store/action';
+import {CardTypes} from '../../const';
 
 type PlaceCardProps = {
   offers: Offer[],
@@ -29,6 +30,7 @@ function PlaceCardList({offers, cardType}: PlaceCardProps): JSX.Element {
               isActive={offer.id === activeCardId}
               onMouseOver={() => dispatch(setHoveredCard(offer.id))}
               onMouseOut={() => dispatch(setHoveredCard(0))}
+              cardType={CardTypes.Cities}
             />
           ))}
         </div>}
@@ -49,6 +51,7 @@ function PlaceCardList({offers, cardType}: PlaceCardProps): JSX.Element {
               isActive={offer.id === activeCardId}
               onMouseOver={() => dispatch(setHoveredCard(offer.id))}
               onMouseOut={() => dispatch(setHoveredCard(0))}
+              cardType={CardTypes.NearPlaces}
             />
           ))}
         </div>}

@@ -10,12 +10,13 @@ type ReviewsProps = {
 }
 
 function Reviews({reviews}: ReviewsProps) {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
+  const isAuth = useAppSelector((state) => state.authorizationStatus);
+
+  console.log(isAuth)
   const sortedReviews = reviews.slice().sort(sortReviewsByDate);
   const MAX_REVIEWS_PER_PAGE = 10;
   const slicedReviews = sortedReviews.slice(0, MAX_REVIEWS_PER_PAGE);
-  console.log(slicedReviews, 'slicedReviews')
+
   const reviewsAmount = slicedReviews.length;
   return (
     <section className="property__reviews reviews">
