@@ -6,10 +6,12 @@ import {City, Points} from '../../types/offers';
 import 'leaflet/dist/leaflet.css';
 import {useAppSelector} from '../../hooks';
 import {URL_MARKER_ACTIVE, URL_MARKER_DEFAULT} from '../../const';
+import L from 'leaflet';
 
 type MapProps = {
   currentCity: City,
-  points: Points
+  points: Points,
+  mapClassName: string,
 }
 
 const defaultCustomIcon = new Icon({
@@ -24,14 +26,18 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [20, 40],
 });
 
-function Map({currentCity, points}: MapProps) {
+function Map({currentCity, points, mapClassName}: MapProps) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, currentCity);
   const selectedPointId = useAppSelector((state) => state.activeCardId);
 
 
   useEffect(() => {
+    const markerGroup = L.layerGroup();
+
     if (map) {
+      markerGroup.addTo(map);
+
       points.forEach((point) => {
         const marker = new Marker({
           lat: point.location.latitude,
@@ -43,20 +49,29 @@ function Map({currentCity, points}: MapProps) {
         } else {
           marker.setIcon(defaultCustomIcon);
         }
-        marker.addTo(map);
+        marker.addTo(markerGroup);
       });
 
 
     }
+    return () => {
+      markerGroup.clearLayers();
+    };
 
 
-  }, [map, points, selectedPointId]);
+  }, [map, points, selectedPointId, currentCity ]);
+
+  useEffect(() => {
+    if (map) {
+      map.flyTo({lat: currentCity.location.latitude, lng: currentCity.location.longitude}, currentCity.location.zoom);
+    }
+  }, [map, currentCity]);
+
 
   return (
     <section
       ref={mapRef}
-      className="cities__map map"
-      style={{height: 400,}}
+      className={`${mapClassName}__map map`}
     >
 
     </section>

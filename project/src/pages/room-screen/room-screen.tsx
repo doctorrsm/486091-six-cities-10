@@ -115,7 +115,7 @@ function RoomScreen(): JSX.Element {
               {reviews.length > 0 && <Reviews reviews={reviews}/>}
             </div>
           </div>
-          <Map currentCity={offer.city} points={nearbyOffers}/>
+          <Map currentCity={offer.city} points={nearbyOffers} mapClassName={'property'}/>
         </section>
         <div className="container">
           <section className="near-places places">

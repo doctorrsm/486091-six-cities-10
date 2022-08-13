@@ -11,6 +11,8 @@ function CitiesWithPlaces(): JSX.Element {
   const currentCity = useAppSelector((state) => state.currentCity);
   const offers = useAppSelector((state) => state.offers);
   const filteredByNameOffers = offers.filter((offer) => offer.city.name === currentCity);
+  console.log('currentCity', currentCity);
+  console.log('filteredByNameOffers', filteredByNameOffers);
   const placesCount = filteredByNameOffers ? filteredByNameOffers.length : 0;
 
   const [selectedSortValue, setSelectedSortValue] = useState<SortTypes>(SortTypes.Default);
@@ -28,7 +30,7 @@ function CitiesWithPlaces(): JSX.Element {
 
       </section>
       <div className="cities__right-section">
-        <Map currentCity={filteredByNameOffers[0].city} points={filteredByNameOffers}/>
+        <Map currentCity={filteredByNameOffers[0].city} points={filteredByNameOffers} mapClassName={'cities'} cityName={currentCity}/>
       </div>
     </div>
   );
