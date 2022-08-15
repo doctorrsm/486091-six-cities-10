@@ -148,7 +148,17 @@ export const CitiesCoordinates: CityCoordinates[] = [
 ];
 
 export enum NameSpace {
-  Data = 'DATA',
   Offer = 'OFFER',
+  Offers = 'OFFERS',
+  NearbyOffers = 'NEARBY_OFFERS',
+  Reviews = 'REVIEWS',
   User = 'USER',
+  App = 'APP'
+}
+
+export const enum RequestStatus {
+  Idle = 'IDLE',
+  Pending = 'PENDING',
+  Fulfilled = 'FULFILLED',
+  Rejected = 'REJECTED',
 }

@@ -1,9 +1,10 @@
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {cityList} from '../../const';
-import {changeCurrentCity} from '../../store/action';
+import {getCurrentCity} from '../../store/app-process/selectors';
+import {changeCurrentCity} from '../../store/app-process/app-process';
 
 function Locations(): JSX.Element {
-  const currentCity = useAppSelector((state) => state.currentCity);
+  const currentCity = useAppSelector(getCurrentCity);
 
   const dispatch = useAppDispatch();
 

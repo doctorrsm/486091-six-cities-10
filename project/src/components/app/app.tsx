@@ -1,6 +1,6 @@
 import {Route, Routes} from 'react-router-dom';
 import MainScreen from '../../pages/main-screen/main-screen';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute, RequestStatus} from '../../const';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import RoomScreen from '../../pages/room-screen/room-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
@@ -11,19 +11,16 @@ import {useAppSelector} from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {getOffersRequestStatus} from '../../store/offers-data/selectors';
 
-const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
-  authorizationStatus === AuthorizationStatus.Unknown;
 
 function App(): JSX.Element {
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const offersRequestStatus = useAppSelector(getOffersRequestStatus);
 
-  const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
-
-
-  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
-    return (
-      <LoadingScreen />
-    );
+  if (offersRequestStatus !== RequestStatus.Fulfilled) {
+    return <LoadingScreen />;
   }
 
   return (

@@ -3,10 +3,11 @@ import UserNavigation from '../user-navigation/user-navigation';
 import {useAppSelector} from '../../hooks';
 import {AuthorizationStatus} from '../../const';
 import GuestNavigation from '../guest-navigation/guest-navigation';
+import {getAuthorizationStatus, getUser} from '../../store/user-process/selectors';
 
 function Header(): JSX.Element {
-  const {authorizationStatus} = useAppSelector((state) => state);
-  const { user} = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const user = useAppSelector(getUser);
   return (
     <header className="header">
       <div className="container">

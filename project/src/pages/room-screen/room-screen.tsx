@@ -1,8 +1,8 @@
 import Gallery from '../../components/gallery/gallery';
-import { useParams } from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import Header from '../../components/header/header';
 import Rating from '../../components/rating/rating';
-import {cardClassNames, CardTypes} from '../../const';
+import {cardClassNames, CardTypes, RequestStatus} from '../../const';
 import {capitalizeFirstLetter} from '../../tools/tools';
 import List from '../../components/list/list';
 import PremiumLabel from '../../components/premium-label/premium-label';
@@ -10,12 +10,12 @@ import Reviews from '../../components/reviews/reviews';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import Map from '../../components/map/map';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {
-  fetchNearbyOffersAction,
-  fetchOfferAction, fetchReviewsAction
-} from '../../store/api-actions';
+import {fetchNearbyOffersAction, fetchOfferAction, fetchReviewsAction} from '../../store/api-actions';
 import {useEffect} from 'react';
 import LoadingScreen from '../loading-screen/loading-screen';
+import {getOffersNearby} from '../../store/offers-nearby-data/selectors';
+import {getCurrentOffer, getOfferRequestStatus} from '../../store/offer-data/selectors';
+import {getReviews} from '../../store/reviews-data/selectors';
 
 function RoomScreen(): JSX.Element {
   const params = useParams();
@@ -27,12 +27,12 @@ function RoomScreen(): JSX.Element {
     dispatch(fetchReviewsAction(String(params.id)));
   }, [dispatch, params.id]);
 
-  const offer = useAppSelector((state) => state.currentOffer);
-  const nearbyOffers = useAppSelector((state) => state.nearbyOffers);
-  const reviews = useAppSelector((state) => state.reviews);
-  const isOfferLoaded = useAppSelector((state) => state.isOfferLoaded);
+  const offer = useAppSelector(getCurrentOffer);
+  const nearbyOffers = useAppSelector(getOffersNearby);
+  const reviews = useAppSelector(getReviews);
+  const offerRequestStatus = useAppSelector(getOfferRequestStatus);
 
-  if (!isOfferLoaded || !offer) {
+  if (offerRequestStatus !== RequestStatus.Fulfilled || !offer) {
     return (
       <LoadingScreen />
     );

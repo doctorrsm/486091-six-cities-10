@@ -4,15 +4,15 @@ import ReviewsForm from '../reviews-form/reviews-form';
 import {useAppSelector} from '../../hooks';
 import {sortReviewsByDate} from '../../tools/tools';
 import {AuthorizationStatus} from '../../const';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
 type ReviewsProps = {
   reviews: Review[];
 }
 
 function Reviews({reviews}: ReviewsProps) {
-  const isAuth = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-  console.log(isAuth)
   const sortedReviews = reviews.slice().sort(sortReviewsByDate);
   const MAX_REVIEWS_PER_PAGE = 10;
   const slicedReviews = sortedReviews.slice(0, MAX_REVIEWS_PER_PAGE);
@@ -28,7 +28,7 @@ function Reviews({reviews}: ReviewsProps) {
           <ReviewsItem key={review.id} review={review} />
         )}
       </ul>
-      {isAuth &&
+      {authorizationStatus === AuthorizationStatus.Auth &&
         <ReviewsForm />}
 
     </section>

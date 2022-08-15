@@ -7,6 +7,7 @@ import 'leaflet/dist/leaflet.css';
 import {useAppSelector} from '../../hooks';
 import {URL_MARKER_ACTIVE, URL_MARKER_DEFAULT} from '../../const';
 import L from 'leaflet';
+import {getActiveCardId} from '../../store/app-process/selectors';
 
 type MapProps = {
   currentCity: City,
@@ -29,7 +30,7 @@ const currentCustomIcon = leaflet.icon({
 function Map({currentCity, points, mapClassName}: MapProps) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, currentCity);
-  const selectedPointId = useAppSelector((state) => state.activeCardId);
+  const selectedPointId = useAppSelector(getActiveCardId);
 
 
   useEffect(() => {

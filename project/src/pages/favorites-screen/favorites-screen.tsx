@@ -3,10 +3,11 @@ import Footer from '../../components/footer/footer';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import FavoritesList from '../../components/favorites-list/favorites-list';
 import {useAppSelector} from '../../hooks';
+import {getOffers} from '../../store/offers-data/selectors';
 
 
 function FavoritesScreen(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
+  const offers = useAppSelector(getOffers);
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
   return (
     <div className={`page ${offers ? '' : 'favorites--empty'}`}>

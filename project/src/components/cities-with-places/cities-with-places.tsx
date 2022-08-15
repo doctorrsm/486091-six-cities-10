@@ -5,14 +5,14 @@ import {useAppSelector} from '../../hooks';
 import SortFilter from '../sort-filter/sort-filter';
 import {useState} from 'react';
 import {sortOffers} from '../../tools/tools';
+import {getCurrentCity} from '../../store/app-process/selectors';
+import {getOffers} from '../../store/offers-data/selectors';
 
 function CitiesWithPlaces(): JSX.Element {
 
-  const currentCity = useAppSelector((state) => state.currentCity);
-  const offers = useAppSelector((state) => state.offers);
+  const currentCity = useAppSelector(getCurrentCity);
+  const offers = useAppSelector(getOffers);
   const filteredByNameOffers = offers.filter((offer) => offer.city.name === currentCity);
-  console.log('currentCity', currentCity);
-  console.log('filteredByNameOffers', filteredByNameOffers);
   const placesCount = filteredByNameOffers ? filteredByNameOffers.length : 0;
 
   const [selectedSortValue, setSelectedSortValue] = useState<SortTypes>(SortTypes.Default);
@@ -30,7 +30,7 @@ function CitiesWithPlaces(): JSX.Element {
 
       </section>
       <div className="cities__right-section">
-        <Map currentCity={filteredByNameOffers[0].city} points={filteredByNameOffers} mapClassName={'cities'} cityName={currentCity}/>
+        <Map currentCity={filteredByNameOffers[0].city} points={filteredByNameOffers} mapClassName={'cities'} />
       </div>
     </div>
   );

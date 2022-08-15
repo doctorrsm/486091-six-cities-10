@@ -4,13 +4,14 @@ import { PageAttributes} from '../../const';
 import CitiesWithPlaces from '../../components/cities-with-places/cities-with-places';
 import CitiesNoPlaces from '../../components/cities-no-places/cities-no-places';
 import {useAppSelector} from '../../hooks';
+import {getCurrentCity} from '../../store/app-process/selectors';
+import {getOffers} from '../../store/offers-data/selectors';
 
 function MainScreen(): JSX.Element {
 
-  const currentCity = useAppSelector((state) => state.currentCity);
-  const offers = useAppSelector((state) => state.offers);
+  const currentCity = useAppSelector(getCurrentCity);
+  const offers = useAppSelector(getOffers);
   const filteredByNameOffers = offers.filter((offer) => offer.city.name === currentCity);
-
   return (
     <Layout pageAttributes={PageAttributes.Main}>
       <>
