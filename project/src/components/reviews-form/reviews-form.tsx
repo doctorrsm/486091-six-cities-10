@@ -1,26 +1,19 @@
-import React, {FormEvent, useRef} from 'react';
+import React, {FormEvent} from 'react';
 import {sendReviewAction} from '../../store/api-actions';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useParams} from 'react-router-dom';
-import {FORM_DATA_INIT_STATE, RequestStatus} from '../../const';
 import {getFormData, getIsFormDisable, getReviewRequestStatus} from '../../store/offer-data/selectors';
 import {setFormData} from '../../store/offer-data/offer-data';
 
 const MIN_REVIEW_LENGTH = 50;
 const MAX_REVIEW_LENGTH = 300;
 
-type ReviewsFormTyps = {
-
-}
-
 function ReviewsForm() {
   const formData = useAppSelector(getFormData);
   const dispatch = useAppDispatch();
   const params = useParams();
 
-  const formRef = useRef();
-  const reviewRequestStatus = useAppSelector(getReviewRequestStatus);
-
+  useAppSelector(getReviewRequestStatus);
   const isDisabled = useAppSelector(getIsFormDisable);
   const fieldChangeHandle = async (evt: { target: { name: string; value: string; }; }) => {
     const {name, value} = evt.target;
@@ -42,7 +35,6 @@ function ReviewsForm() {
       className="reviews__form form"
       action="#" method="post"
       onSubmit={handleSubmit}
-      ref={formRef}
     >
       <label className="reviews__label form__label" htmlFor="review">
         Your review

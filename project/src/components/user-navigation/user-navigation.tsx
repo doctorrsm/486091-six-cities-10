@@ -1,14 +1,10 @@
 import {AppRoute} from '../../const';
 import {Link} from 'react-router-dom';
-import {fetchFavoriteOffersAction, logoutAction} from '../../store/api-actions';
+import {logoutAction} from '../../store/api-actions';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {Offer} from '../../types/offers';
 import GuestNavigation from '../guest-navigation/guest-navigation';
-import {getOffers} from '../../store/offers-data/selectors';
 import {getUser} from '../../store/user-process/selectors';
-import {useEffect} from 'react';
 import {getFavoriteOffers} from '../../store/favorite-process/selectors';
-import {store} from '../../store';
 
 
 function UserNavigation(): JSX.Element {

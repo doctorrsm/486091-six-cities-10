@@ -4,7 +4,6 @@ import {useAppSelector} from '../../hooks';
 import {AuthorizationStatus} from '../../const';
 import GuestNavigation from '../guest-navigation/guest-navigation';
 import {getAuthorizationStatus, getUser} from '../../store/user-process/selectors';
-import {getFavoriteOffers} from '../../store/favorite-process/selectors';
 
 function Header(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);

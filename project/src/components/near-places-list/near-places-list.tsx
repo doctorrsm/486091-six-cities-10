@@ -12,7 +12,7 @@ function NearPlacesList({offers}: Props): JSX.Element{
       <PlaceCard offer={offers[2]} isActive={false} cardType={'near-places'} />
       <PlaceCard offer={offers[3]} isActive={false} cardType={'near-places'} />
     </>
-  )
+  );
 }
 
 export default NearPlacesList;

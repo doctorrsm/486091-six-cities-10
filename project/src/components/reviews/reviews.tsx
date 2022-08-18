@@ -14,11 +14,11 @@ type ReviewsProps = {
 function Reviews({reviews}: ReviewsProps) {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const formData = useAppSelector(getFormData);
-  const reviewsAmount = reviews.length;
+
   const sortedReviews = reviews.slice().sort(sortReviewsByDate);
   const MAX_REVIEWS_PER_PAGE = 10;
   const slicedReviews = sortedReviews.slice(0, MAX_REVIEWS_PER_PAGE);
-
+  const reviewsAmount = slicedReviews.length;
 
   return (
     <section className="property__reviews reviews">

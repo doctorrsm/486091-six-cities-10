@@ -1,13 +1,11 @@
-import {CardTypes, SortTypes} from '../../const';
+import {CardTypes} from '../../const';
 import Map from '../map/map';
 import PlaceCardList from '../place-card-list/place-card-list';
 import {useAppSelector} from '../../hooks';
 import SortFilter from '../sort-filter/sort-filter';
-import {useState} from 'react';
 import {sortOffers} from '../../tools/tools';
 import {getCurrentCity, getSortType} from '../../store/app-process/selectors';
 import {getOffers} from '../../store/offers-data/selectors';
-
 
 
 function CitiesWithPlaces(): JSX.Element {
@@ -19,7 +17,7 @@ function CitiesWithPlaces(): JSX.Element {
 
   const selectedSortValue = useAppSelector(getSortType);
 
- // const [selectedSortValue, setSelectedSortValue] = useState<SortTypes>(SortTypes.Default);
+  // const [selectedSortValue, setSelectedSortValue] = useState<SortTypes>(SortTypes.Default);
 
   const sortFilteredOffers = sortOffers(filteredByNameOffers, selectedSortValue);
 
