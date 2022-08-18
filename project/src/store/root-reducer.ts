@@ -6,6 +6,7 @@ import {appProcess} from './app-process/app-process';
 import {reviewsData} from './reviews-data/reviews-data';
 import {offersNearbyData} from './offers-nearby-data/offers-nearby-data';
 import {offerData} from './offer-data/offer-data';
+import {favoriteProcess} from './favorite-process/favorite-process';
 
 export const rootReducer = combineReducers({
   [NameSpace.User]: userProcess.reducer,
@@ -14,4 +15,5 @@ export const rootReducer = combineReducers({
   [NameSpace.App]: appProcess.reducer,
   [NameSpace.Reviews]: reviewsData.reducer,
   [NameSpace.NearbyOffers]: offersNearbyData.reducer,
+  [NameSpace.Favorites]: favoriteProcess.reducer,
 });

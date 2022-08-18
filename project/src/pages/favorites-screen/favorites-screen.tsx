@@ -4,15 +4,21 @@ import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import FavoritesList from '../../components/favorites-list/favorites-list';
 import {useAppSelector} from '../../hooks';
 import {getOffers} from '../../store/offers-data/selectors';
+import {store} from '../../store';
+import {fetchFavoriteOffersAction, fetchOffersAction} from '../../store/api-actions';
+import {getFavoriteOffers} from '../../store/favorite-process/selectors';
+import {useEffect} from 'react';
 
-
+store.dispatch(fetchOffersAction());
+// store.dispatch(fetchFavoriteOffersAction());
 function FavoritesScreen(): JSX.Element {
-  const offers = useAppSelector(getOffers);
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
+
   return (
-    <div className={`page ${offers ? '' : 'favorites--empty'}`}>
+    <div className={`page ${favoriteOffers ? '' : 'favorites--empty'}`}>
       <Header />
-      <main className={`page__main page__main--favorites ${offers ? '' : 'page__main--favorites-empty'}`}>
+      <main className={`page__main page__main--favorites ${favoriteOffers ? '' : 'page__main--favorites-empty'}`}>
         <div className="page__favorites-container container">
           {favoriteOffers.length > 0 ? <FavoritesList offers={favoriteOffers}/> : <FavoritesEmpty />}
         </div>

@@ -5,8 +5,10 @@ import {useAppSelector} from '../../hooks';
 import SortFilter from '../sort-filter/sort-filter';
 import {useState} from 'react';
 import {sortOffers} from '../../tools/tools';
-import {getCurrentCity} from '../../store/app-process/selectors';
+import {getCurrentCity, getSortType} from '../../store/app-process/selectors';
 import {getOffers} from '../../store/offers-data/selectors';
+
+
 
 function CitiesWithPlaces(): JSX.Element {
 
@@ -15,7 +17,9 @@ function CitiesWithPlaces(): JSX.Element {
   const filteredByNameOffers = offers.filter((offer) => offer.city.name === currentCity);
   const placesCount = filteredByNameOffers ? filteredByNameOffers.length : 0;
 
-  const [selectedSortValue, setSelectedSortValue] = useState<SortTypes>(SortTypes.Default);
+  const selectedSortValue = useAppSelector(getSortType);
+
+ // const [selectedSortValue, setSelectedSortValue] = useState<SortTypes>(SortTypes.Default);
 
   const sortFilteredOffers = sortOffers(filteredByNameOffers, selectedSortValue);
 
@@ -24,7 +28,7 @@ function CitiesWithPlaces(): JSX.Element {
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
         <b className="places__found">{placesCount} places to stay in {currentCity}</b>
-        <SortFilter selectedSortValue={selectedSortValue} setSelectedSortValue={setSelectedSortValue}/>
+        <SortFilter />
 
         <PlaceCardList cardType={CardTypes.Cities} offers={sortFilteredOffers} />
 

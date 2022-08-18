@@ -7,3 +7,4 @@ export const getOffers = (state: State): Offer[] =>
 
 export const getOffersRequestStatus = (state: State): string =>
   state[NameSpace.Offers].offersRequestStatus;
+

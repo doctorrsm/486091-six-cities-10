@@ -1,28 +1,39 @@
-import React, {useState} from 'react';
+import React, {FormEvent, useRef} from 'react';
 import {sendReviewAction} from '../../store/api-actions';
-import {useAppDispatch} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useParams} from 'react-router-dom';
-import {FORM_DATA_INIT_STATE} from '../../const';
+import {FORM_DATA_INIT_STATE, RequestStatus} from '../../const';
+import {getFormData, getIsFormDisable, getReviewRequestStatus} from '../../store/offer-data/selectors';
+import {setFormData} from '../../store/offer-data/offer-data';
 
 const MIN_REVIEW_LENGTH = 50;
 const MAX_REVIEW_LENGTH = 300;
 
+type ReviewsFormTyps = {
+
+}
+
 function ReviewsForm() {
-  const [formData, setFormData] = useState(FORM_DATA_INIT_STATE);
+  const formData = useAppSelector(getFormData);
   const dispatch = useAppDispatch();
   const params = useParams();
 
-  const [isDisabled, setIsDisabled] = useState(true);
+  const formRef = useRef();
+  const reviewRequestStatus = useAppSelector(getReviewRequestStatus);
 
-  const fieldChangeHandle = (evt: { target: { name: string; value: string; }; }) => {
+  const isDisabled = useAppSelector(getIsFormDisable);
+  const fieldChangeHandle = async (evt: { target: { name: string; value: string; }; }) => {
     const {name, value} = evt.target;
-    setFormData({...formData, [name]: value});
+    dispatch(setFormData({...formData, [name]: value}));
   };
 
-  const handleSubmit = (evt: React.FormEvent) => {
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    setIsDisabled(true);
-    dispatch(sendReviewAction({ id: Number(params.id), comment: formData.review, rating: formData.rating, setFormData, setIsDisabled}));
+    dispatch(sendReviewAction({ id: Number(params.id), comment: formData.review, rating: formData.rating})).
+      then(() => {
+        const target = evt.target as HTMLFormElement;
+        target.reset();
+      });
   };
 
 
@@ -31,6 +42,7 @@ function ReviewsForm() {
       className="reviews__form form"
       action="#" method="post"
       onSubmit={handleSubmit}
+      ref={formRef}
     >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
@@ -140,7 +152,7 @@ function ReviewsForm() {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={isDisabled && (formData.review.length < MIN_REVIEW_LENGTH || formData.review.length > MAX_REVIEW_LENGTH || !formData.rating)}
+          disabled={isDisabled || formData.review.length < MIN_REVIEW_LENGTH || formData.review.length > MAX_REVIEW_LENGTH || !formData.rating}
         >
           Submit
         </button>

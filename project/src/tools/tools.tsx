@@ -30,7 +30,7 @@ export const renderRatingWidth = (rating: number): { width: string } => {
 
 export const sortReviewsByDate = (first:Review, second:Review) => Number(new Date(second.date)) - Number(new Date(first.date));
 
-export const sortOffers = (offers: Offer[], SortType: SortTypes) => {
+export const sortOffers = (offers: Offer[], SortType: string) => {
   switch (SortType) {
     case SortTypes.PriceLowToHigh:
       return offers.sort((a, b) => a.price - b.price);
@@ -44,3 +44,5 @@ export const sortOffers = (offers: Offer[], SortType: SortTypes) => {
 };
 
 export const findCityByName = (cityName: string | null, cities: CityCoordinates[]) => cities.find((item:City) => item.name === cityName);
+
+export const getCityNamesFromOffers = (offers: Offer[]) => [...new Set(offers.map((item) => item.city.name))];

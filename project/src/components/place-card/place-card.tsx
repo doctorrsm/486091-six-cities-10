@@ -1,10 +1,14 @@
-import {Link} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 
 import {Offer} from '../../types/offers';
 import {capitalizeFirstLetter} from '../../tools/tools';
 import Rating from '../rating/rating';
-import {cardClassNames} from '../../const';
+import {AppRoute, AuthorizationStatus, cardClassNames, CardTypes} from '../../const';
 import React from 'react';
+import {changeFavoriteOfferStatusAction, fetchNearbyOffersAction, fetchOffersAction} from '../../store/api-actions';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {redirectToRoute} from '../../store/action';
 
 type Props = {
   offer: Offer;
@@ -17,6 +21,10 @@ type Props = {
 function PlaceCard({offer, isActive, onMouseOver, onMouseOut, cardType}: Props): JSX.Element {
   const activeCardClassName = 'place-card_active';
   const isFavoritesCard = cardType === 'favorites';
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  const dispatch = useAppDispatch();
+  const params = useParams();
   return (
     <article
       className={`${cardType}__card  place-card ${isActive ? activeCardClassName : ''}`}
@@ -40,7 +48,22 @@ function PlaceCard({offer, isActive, onMouseOver, onMouseOut, cardType}: Props):
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47; night</span>
           </div>
-          <button className={`place-card__bookmark-button ${offer.isFavorite ? 'place-card__bookmark-button--active' : ''} button`} type="button">
+          <button
+            className={`place-card__bookmark-button ${offer.isFavorite ? 'place-card__bookmark-button--active' : ''} button`}
+            type="button"
+            onClick={(evt) => {
+              evt.preventDefault();
+              if (authorizationStatus === AuthorizationStatus.NoAuth) {
+                dispatch(redirectToRoute(AppRoute.Login));
+              }
+
+              dispatch(changeFavoriteOfferStatusAction({offerId: offer.id, isFavorite: Number(!offer.isFavorite)}));
+              dispatch(fetchOffersAction);
+              if(cardType === CardTypes.NearPlaces && params.id) {
+                dispatch(fetchNearbyOffersAction(params.id));
+              }
+            }}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref={'#icon-bookmark'}></use>
             </svg>
@@ -57,4 +80,4 @@ function PlaceCard({offer, isActive, onMouseOver, onMouseOut, cardType}: Props):
   );
 }
 
-export default PlaceCard;
+export default React.memo(PlaceCard);

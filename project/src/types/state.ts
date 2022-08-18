@@ -19,10 +19,15 @@ export type AppProcess = {
   sortType: string;
   activeCardId: number;
 }
-
+export type FormData = {
+  review: string, rating: number
+}
 export type OfferData = {
   offerRequestStatus: RequestStatus,
+  reviewRequestStatus: RequestStatus,
   currentOffer: Offer | null,
+  formData: FormData,
+  isFormDisabled: boolean,
 };
 
 export type OffersData = {
@@ -31,13 +36,24 @@ export type OffersData = {
 }
 
 export type OffersNearbyData = {
-  nearbyOffers: Offer[]
+  nearbyOffers: Offer[],
 }
 
 export type ReviewsData = {
   reviews: Review[];
   reviewRequestStatus: RequestStatus;
 };
+
+export type FavoriteOffers = {
+  favoriteOffers: Offer[];
+  favoriteRequestStatus: RequestStatus;
+  favoriteChangeRequestStatus: RequestStatus;
+};
+
+export type ChangeFavorites = {
+  offerId: number,
+  isFavorite: number,
+}
 
 export type State = ReturnType<typeof store.getState>;
 

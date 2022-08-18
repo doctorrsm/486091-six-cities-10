@@ -19,7 +19,7 @@ function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const offersRequestStatus = useAppSelector(getOffersRequestStatus);
 
-  if (offersRequestStatus !== RequestStatus.Fulfilled) {
+  if (offersRequestStatus === RequestStatus.Idle) {
     return <LoadingScreen />;
   }
 

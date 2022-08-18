@@ -1,21 +1,30 @@
 import Gallery from '../../components/gallery/gallery';
+import Reviews from '../../components/reviews/reviews';
 import {useParams} from 'react-router-dom';
 import Header from '../../components/header/header';
 import Rating from '../../components/rating/rating';
-import {cardClassNames, CardTypes, RequestStatus} from '../../const';
+import {AuthorizationStatus, cardClassNames, CardTypes, RequestStatus} from '../../const';
 import {capitalizeFirstLetter} from '../../tools/tools';
 import List from '../../components/list/list';
 import PremiumLabel from '../../components/premium-label/premium-label';
-import Reviews from '../../components/reviews/reviews';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import Map from '../../components/map/map';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {fetchNearbyOffersAction, fetchOfferAction, fetchReviewsAction} from '../../store/api-actions';
+import {
+  changeFavoriteOfferStatusAction,
+  fetchNearbyOffersAction,
+  fetchOfferAction,
+  fetchReviewsAction
+} from '../../store/api-actions';
 import {useEffect} from 'react';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {getOffersNearby} from '../../store/offers-nearby-data/selectors';
 import {getCurrentOffer, getOfferRequestStatus} from '../../store/offer-data/selectors';
 import {getReviews} from '../../store/reviews-data/selectors';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import PageNotFoundScreen from '../page-not-found-screen/page-not-found-screen';
+import {getFavoriteChangeRequestStatus} from '../../store/favorite-process/selectors';
+
 
 function RoomScreen(): JSX.Element {
   const params = useParams();
@@ -25,18 +34,28 @@ function RoomScreen(): JSX.Element {
     dispatch(fetchOfferAction(Number((params.id))));
     dispatch(fetchNearbyOffersAction(String(params.id)));
     dispatch(fetchReviewsAction(String(params.id)));
-  }, [dispatch, params.id]);
+  }, [dispatch, params.id,]);
 
   const offer = useAppSelector(getCurrentOffer);
   const nearbyOffers = useAppSelector(getOffersNearby);
   const reviews = useAppSelector(getReviews);
   const offerRequestStatus = useAppSelector(getOfferRequestStatus);
+  const authorisationStatus = useAppSelector(getAuthorizationStatus);
+  const favoriteChangeRequestStatus = useAppSelector(getFavoriteChangeRequestStatus);
 
-  if (offerRequestStatus !== RequestStatus.Fulfilled || !offer) {
+  if (offerRequestStatus === RequestStatus.Rejected ) {
+    return (
+      <PageNotFoundScreen />
+    );
+  }
+
+  if (offerRequestStatus === RequestStatus.Idle || !offer) {
     return (
       <LoadingScreen />
     );
   }
+
+
 
   return (
     <div className="page">
@@ -54,8 +73,14 @@ function RoomScreen(): JSX.Element {
                   {offer.title}
                 </h1>
                 <button
-                  className="property__bookmark-button button"
+                  className={`property__bookmark-button button ${offer.isFavorite ? 'property__bookmark-button--active' : ''}`}
                   type="button"
+                  onClick={(evt) => {
+                    evt.preventDefault();
+                    dispatch(changeFavoriteOfferStatusAction({offerId: offer.id, isFavorite: Number(!offer.isFavorite)}));
+                    dispatch(fetchOfferAction(Number((params.id))));
+                  }}
+                  disabled={favoriteChangeRequestStatus === RequestStatus.Pending}
                 >
                   <svg className="property__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark" />
@@ -101,18 +126,10 @@ function RoomScreen(): JSX.Element {
                 <div className="property__description">
                   <p className="property__text">
                     {offer.description}
-                      A quiet cozy and picturesque that hides behind a a river by
-                      the unique lightness of Amsterdam. The building is green and
-                      from 18th century.
-                  </p>
-                  <p className="property__text">
-                      An independent House, strategically located between Rembrand
-                      Square and National Opera, but where the bustle of the city
-                      comes to rest in this alley flowery and colorful.
                   </p>
                 </div>
               </div>
-              {reviews.length > 0 && <Reviews reviews={reviews}/>}
+              {(authorisationStatus === AuthorizationStatus.Auth) && reviews.length > 0 && <Reviews reviews={reviews}/>}
             </div>
           </div>
           <Map currentCity={offer.city} points={nearbyOffers} mapClassName={'property'}/>

@@ -89,6 +89,7 @@ export const APIRoute = {
   Login: '/login',
   Logout: '/logout',
   Reviews: '/comments',
+  Favorite: '/favorite'
 } as const;
 
 export const FORM_DATA_INIT_STATE = {
@@ -153,7 +154,8 @@ export enum NameSpace {
   NearbyOffers = 'NEARBY_OFFERS',
   Reviews = 'REVIEWS',
   User = 'USER',
-  App = 'APP'
+  App = 'APP',
+  Favorites = 'FAVORITES',
 }
 
 export const enum RequestStatus {

@@ -1,12 +1,13 @@
 import {useState} from 'react';
 import {SortTypes} from '../../const';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {getSortType} from '../../store/app-process/selectors';
+import {changeSort} from '../../store/app-process/app-process';
 
-type Props = {
-  setSelectedSortValue: (value: SortTypes) => void,
-  selectedSortValue: SortTypes,
-}
+function SortFilter():JSX.Element {
+  const dispatch = useAppDispatch();
+  const selectedSortValue = useAppSelector(getSortType);
 
-function SortFilter({setSelectedSortValue, selectedSortValue}: Props):JSX.Element {
   const [isOpen, changeOpenStatus] = useState(false);
   const handleToggleFormClick = () => {
     changeOpenStatus(!isOpen);
@@ -17,7 +18,7 @@ function SortFilter({setSelectedSortValue, selectedSortValue}: Props):JSX.Elemen
     const target = evt.target as HTMLElement;
     changeOpenStatus(!isOpen);
 
-    setSelectedSortValue(target.textContent as SortTypes);
+    dispatch(changeSort(target.textContent as SortTypes));
   };
 
 
@@ -25,7 +26,7 @@ function SortFilter({setSelectedSortValue, selectedSortValue}: Props):JSX.Elemen
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type" tabIndex={0} onClick={handleToggleFormClick}>
-                                      Popular
+        {selectedSortValue}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref={'#icon-arrow-select'}></use>
         </svg>
@@ -37,7 +38,7 @@ function SortFilter({setSelectedSortValue, selectedSortValue}: Props):JSX.Elemen
         <li className={`places__option ${SortTypes.TopRatingFirst === selectedSortValue ? 'places__option--active' : null}`} tabIndex={0} onClick={handleFilterClick}>{SortTypes.TopRatingFirst}</li>
       </ul>
     </form>
-  )
+  );
 }
 
 export default SortFilter;

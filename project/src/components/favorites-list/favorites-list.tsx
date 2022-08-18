@@ -1,4 +1,6 @@
 import {Offer} from '../../types/offers';
+import {getCityNamesFromOffers} from '../../tools/tools';
+import FavoritesListItem from '../favorites-list-item/favorites-list-item';
 // import {Cities} from '../../const';
 // import FavoritesListItem from '../favorites-list-item/favorites-list-item';
 
@@ -7,11 +9,12 @@ type Props = {
 }
 
 function FavoritesList({offers}: Props): JSX.Element {
+  const cityNames = getCityNamesFromOffers(offers);
   return (
     <ul className="favorites__list">
-      {/*{*/}
-      {/*  Cities.map((city) => (<FavoritesListItem offers={offers} key={city.name} city={city.name} />))*/}
-      {/*}*/}
+      {
+        cityNames.map((city) => (<FavoritesListItem offers={offers} key={city} city={city} />))
+      }
     </ul>
   );
 }
