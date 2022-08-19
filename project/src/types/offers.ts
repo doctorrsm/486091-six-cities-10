@@ -45,3 +45,18 @@ export type Review = {
     name: string
   }
 };
+
+export type Location = {
+  latitude: number,
+  longitude: number,
+  zoom: number
+}
+
+type Point = Offer
+
+export type City = {
+  location: Location,
+  name: string
+}
+
+export type Points = Point[];

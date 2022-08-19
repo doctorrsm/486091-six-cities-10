@@ -1,3 +1,8 @@
+import {CityCoordinates} from './types/city-coordinates';
+
+export const URL_MARKER_DEFAULT = 'img/pin.svg';
+export const URL_MARKER_ACTIVE = 'img/pin-active.svg';
+
 export enum AppRoute {
   Favorites = '/favorites',
   Room = '/offer/:id',
@@ -12,13 +17,36 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export enum Cities {
+export enum HTTP_CODE {
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  NOT_FOUND = 404,
+}
+
+export enum CityNames {
   FirstCity = 'Paris',
   SecondCity = 'Cologne',
   ThirdCity = 'Brussels',
   FourthCity = 'Amsterdam',
   FifthCity = 'Hamburg',
   SixthCity = 'Dusseldorf'
+}
+
+export const projectCities = {
+  Paris: 'Paris',
+  Cologne: 'Cologne',
+  Brussels: 'Brussels',
+  Amsterdam: 'Amsterdam',
+  Hamburg: 'Hamburg',
+  Dusseldorf: 'Dusseldorf'
+} as const;
+
+export const cityList = Object.keys(projectCities);
+
+export enum CardTypes {
+  Cities = 'cities',
+  Favorites = 'favorites',
+  NearPlaces = 'near-places'
 }
 
 export enum cardClassNames {
@@ -48,3 +76,91 @@ export const PageAttributes = {
     'BodyClassName': 'page page--gray page--login',
   }
 } as const;
+
+export enum SortTypes {
+  Default = 'Popular',
+  PriceLowToHigh = 'Price: low to high',
+  PriceHighToLow = 'Price: high to low',
+  TopRatingFirst ='Top rated first'
+}
+
+export const APIRoute = {
+  Offers: '/hotels',
+  Login: '/login',
+  Logout: '/logout',
+  Reviews: '/comments',
+  Favorite: '/favorite'
+} as const;
+
+export const FORM_DATA_INIT_STATE = {
+  review: '',
+  rating: 0,
+};
+
+export const CitiesCoordinates: CityCoordinates[] = [
+  {
+    name: 'Paris',
+    location: {
+      latitude: 48.864716,
+      longitude: 2.349014,
+      zoom: 10,
+    },
+  },
+  {
+    name: 'Cologne',
+    location: {
+      latitude: 50.935173,
+      longitude: 6.953101,
+      zoom: 10,
+    },
+  },
+  {
+    name: 'Brussels',
+    location: {
+      latitude: 50.8505,
+      longitude: 4.3488,
+      zoom: 10,
+    },
+  },
+  {
+    name: 'Amsterdam',
+    location: {
+      latitude: 52.370216,
+      longitude: 4.895168,
+      zoom: 10,
+    },
+  },
+  {
+    name: 'Hamburg',
+    location: {
+      latitude: 53.551086,
+      longitude: 9.993682,
+      zoom: 10,
+    },
+  },
+  {
+    name: 'Dusseldorf',
+    location: {
+      latitude: 51.233334,
+      longitude: 6.783333,
+      zoom: 10,
+    },
+  },
+];
+
+export enum NameSpace {
+  Offer = 'OFFER',
+  Offers = 'OFFERS',
+  NearbyOffers = 'NEARBY_OFFERS',
+  Reviews = 'REVIEWS',
+  User = 'USER',
+  App = 'APP',
+  Favorites = 'FAVORITES',
+}
+
+export const enum RequestStatus {
+  Idle = 'IDLE',
+  Pending = 'PENDING',
+  Fulfilled = 'FULFILLED',
+  Rejected = 'REJECTED',
+}

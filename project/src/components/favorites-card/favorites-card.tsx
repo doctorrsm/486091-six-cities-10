@@ -1,7 +1,9 @@
 import {capitalizeFirstLetter, renderPremiumLabel} from '../../tools/tools';
 import {Offer} from '../../types/offers';
 import Rating from '../rating/rating';
-import {cardClassNames} from "../../const";
+import {AppRoute, cardClassNames} from '../../const';
+import {generatePath, Link} from 'react-router-dom';
+
 type Props = {
   offer: Offer;
 }
@@ -11,7 +13,7 @@ function FavoritesCard({offer}: Props): JSX.Element {
     <article className="favorites__card place-card">
       {offer.isPremium ? renderPremiumLabel() : ''}
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={generatePath(AppRoute.Room, {id: String(offer.id)})}>
           <img
             className="place-card__image"
             src={offer.previewImage}
@@ -19,7 +21,7 @@ function FavoritesCard({offer}: Props): JSX.Element {
             width={150}
             height={110}
           />
-        </a>
+        </Link>
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
@@ -45,7 +47,7 @@ function FavoritesCard({offer}: Props): JSX.Element {
         </div>
         <Rating rating={offer.rating} cardType={cardClassNames.PlaceCard} />
         <h2 className="place-card__name">
-          <a href="#">{offer.title}</a>
+          <Link to={generatePath(AppRoute.Room, {id: String(offer.id)})}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{capitalizeFirstLetter(offer.type)}</p>
       </div>

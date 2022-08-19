@@ -1,7 +1,15 @@
-import { Link } from 'react-router-dom';
 import Logo from '../logo/logo';
+import UserNavigation from '../user-navigation/user-navigation';
+import {useAppSelector} from '../../hooks';
+import {AuthorizationStatus} from '../../const';
+import GuestNavigation from '../guest-navigation/guest-navigation';
+import {getAuthorizationStatus, getUser} from '../../store/user-process/selectors';
 
 function Header(): JSX.Element {
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const user = useAppSelector(getUser);
+  // const user = useAppSelector(getUser);
+  // const favoriteOffers = useAppSelector(getFavoriteOffers);
   return (
     <header className="header">
       <div className="container">
@@ -11,18 +19,9 @@ function Header(): JSX.Element {
           </div>
           <nav className="header__nav">
             <ul className="header__nav-list">
-              <li className="header__nav-item user">
-                <Link to='favorites' className="header__nav-link header__nav-link--profile" >
-                  <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                  <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  <span className="header__favorite-count">3</span>
-                </Link>
-              </li>
-              <li className="header__nav-item">
-                <a className="header__nav-link" href="#">
-                  <span className="header__signout">Sign out</span>
-                </a>
-              </li>
+              {((authorizationStatus === AuthorizationStatus.Auth) && (user !== null))
+                ? <UserNavigation />
+                : <GuestNavigation />}
             </ul>
           </nav>
         </div>

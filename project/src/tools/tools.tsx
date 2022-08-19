@@ -1,3 +1,7 @@
+import {City, Offer, Review} from '../types/offers';
+import {SortTypes} from '../const';
+import {CityCoordinates} from '../types/city-coordinates';
+
 export const capitalizeFirstLetter = (string: string) => string.charAt(0).toUpperCase() + string.slice(1);
 
 export const renderPremiumLabel = (): JSX.Element => (
@@ -24,3 +28,21 @@ export const renderRatingWidth = (rating: number): { width: string } => {
   }
 };
 
+export const sortReviewsByDate = (first:Review, second:Review) => Number(new Date(second.date)) - Number(new Date(first.date));
+
+export const sortOffers = (offers: Offer[], SortType: string) => {
+  switch (SortType) {
+    case SortTypes.PriceLowToHigh:
+      return offers.sort((a, b) => a.price - b.price);
+    case SortTypes.PriceHighToLow:
+      return offers.sort((a, b) => b.price - a.price);
+    case SortTypes.TopRatingFirst:
+      return offers.sort((a, b) => b.rating - a.rating);
+    default:
+      return offers;
+  }
+};
+
+export const findCityByName = (cityName: string | null, cities: CityCoordinates[]) => cities.find((item:City) => item.name === cityName);
+
+export const getCityNamesFromOffers = (offers: Offer[]) => [...new Set(offers.map((item) => item.city.name))];

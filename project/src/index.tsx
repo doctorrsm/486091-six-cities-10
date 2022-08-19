@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import {offers} from './mocks/offers';
-import {reviews} from './mocks/reviews';
-
-const Setting = {
-  PLACES_COUNT: 312,
-};
+import {Provider} from 'react-redux';
+import {store} from './store';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {checkAuthAction, fetchFavoriteOffersAction, fetchOffersAction} from './store/api-actions';
+store.dispatch(checkAuthAction());
+store.dispatch(fetchOffersAction());
+store.dispatch(fetchFavoriteOffersAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -14,10 +16,19 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App
-      placesCount={Setting.PLACES_COUNT}
-      offers = {offers}
-      reviews = {reviews}
-    />
+    <Provider store={store}>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <App />
+    </Provider>
   </React.StrictMode>,
 );
