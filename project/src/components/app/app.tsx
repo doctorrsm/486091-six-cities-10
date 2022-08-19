@@ -1,6 +1,6 @@
 import {Route, Routes} from 'react-router-dom';
 import MainScreen from '../../pages/main-screen/main-screen';
-import {AppRoute, RequestStatus} from '../../const';
+import {AppRoute, AuthorizationStatus, RequestStatus} from '../../const';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import RoomScreen from '../../pages/room-screen/room-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
@@ -19,7 +19,7 @@ function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const offersRequestStatus = useAppSelector(getOffersRequestStatus);
 
-  if (offersRequestStatus === RequestStatus.Idle) {
+  if (offersRequestStatus === RequestStatus.Idle || authorizationStatus === AuthorizationStatus.Unknown) {
     return <LoadingScreen />;
   }
 

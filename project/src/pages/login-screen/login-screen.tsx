@@ -1,18 +1,29 @@
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
-import {FormEvent, useRef} from 'react';
-import { useAppDispatch } from '../../hooks';
+import {AppRoute, AuthorizationStatus} from '../../const';
+import {FormEvent, useEffect, useRef} from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
 import {toast} from 'react-toastify';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {redirectToRoute} from '../../store/action';
+
 
 const passwordRegExp = new RegExp(/(?=.*[0-9])(?=.*[A-Za-z])[0-9A-Za-z]{2,}/);
 
 function LoginScreen(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(redirectToRoute(AppRoute.Root));
+    }
+  }, [authorizationStatus, dispatch]);
+
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  const dispatch = useAppDispatch();
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
