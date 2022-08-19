@@ -54,9 +54,6 @@ function RoomScreen(): JSX.Element {
       <LoadingScreen />
     );
   }
-
-
-
   return (
     <div className="page">
       <Header />

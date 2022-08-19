@@ -5,7 +5,6 @@ import {useAppSelector} from '../../hooks';
 import {sortReviewsByDate} from '../../tools/tools';
 import {AuthorizationStatus} from '../../const';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
-import {getFormData} from '../../store/offer-data/selectors';
 
 type ReviewsProps = {
   reviews: Review[];
@@ -13,7 +12,6 @@ type ReviewsProps = {
 
 function Reviews({reviews}: ReviewsProps) {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const formData = useAppSelector(getFormData);
 
   const sortedReviews = reviews.slice().sort(sortReviewsByDate);
   const MAX_REVIEWS_PER_PAGE = 10;

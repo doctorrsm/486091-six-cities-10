@@ -1,8 +1,7 @@
 import {NameSpace, RequestStatus} from '../../const';
 import {createSlice} from '@reduxjs/toolkit';
 import {FavoriteOffers} from '../../types/state';
-import {changeFavoriteOfferStatusAction, fetchFavoriteOffersAction, fetchOffersAction} from '../api-actions';
-import {store} from '../index';
+import {changeFavoriteOfferStatusAction, fetchFavoriteOffersAction} from '../api-actions';
 
 
 const initialState: FavoriteOffers = {

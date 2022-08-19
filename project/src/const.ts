@@ -32,7 +32,7 @@ export enum CityNames {
   SixthCity = 'Dusseldorf'
 }
 
-export const Cities = {
+export const projectCities = {
   Paris: 'Paris',
   Cologne: 'Cologne',
   Brussels: 'Brussels',
@@ -41,7 +41,7 @@ export const Cities = {
   Dusseldorf: 'Dusseldorf'
 } as const;
 
-export const cityList = Object.keys(Cities);
+export const cityList = Object.keys(projectCities);
 
 export enum CardTypes {
   Cities = 'cities',

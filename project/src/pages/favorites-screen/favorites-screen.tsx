@@ -3,11 +3,9 @@ import Footer from '../../components/footer/footer';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import FavoritesList from '../../components/favorites-list/favorites-list';
 import {useAppSelector} from '../../hooks';
-import {getOffers} from '../../store/offers-data/selectors';
 import {store} from '../../store';
-import {fetchFavoriteOffersAction, fetchOffersAction} from '../../store/api-actions';
+import {fetchOffersAction} from '../../store/api-actions';
 import {getFavoriteOffers} from '../../store/favorite-process/selectors';
-import {useEffect} from 'react';
 
 store.dispatch(fetchOffersAction());
 // store.dispatch(fetchFavoriteOffersAction());
