@@ -4,6 +4,9 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useParams} from 'react-router-dom';
 import {getFormData, getIsFormDisable, getReviewRequestStatus} from '../../store/offer-data/selectors';
 import {setFormData} from '../../store/offer-data/offer-data';
+import {RequestStatus} from '../../const';
+import {resetReviewRequestStatus} from '../../store/reviews-data/reviews-data';
+import {toast} from 'react-toastify';
 
 const MIN_REVIEW_LENGTH = 50;
 const MAX_REVIEW_LENGTH = 300;
@@ -23,9 +26,14 @@ function ReviewsForm() {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     dispatch(sendReviewAction({ id: Number(params.id), comment: formData.review, rating: formData.rating})).
-      then(() => {
+      then((data) => {
         const target = evt.target as HTMLFormElement;
-        target.reset();
+        if(data.meta.requestStatus.toUpperCase() === RequestStatus.Fulfilled) {
+          target.reset();
+          dispatch(resetReviewRequestStatus());
+        } else {
+          toast.error('Невозможно отправить комментарий, ошибка сервера');
+        }
       });
   };
 
