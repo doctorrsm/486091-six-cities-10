@@ -16,9 +16,17 @@ function LoginScreen(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
-    if (authorizationStatus === AuthorizationStatus.Auth) {
-      dispatch(redirectToRoute(AppRoute.Root));
+    let isMounted = true;
+
+    if (isMounted) {
+      if (authorizationStatus === AuthorizationStatus.Auth) {
+        dispatch(redirectToRoute(AppRoute.Root));
+      }
     }
+    return () => {
+      isMounted = false;
+    };
+
   }, [authorizationStatus, dispatch]);
 
   const emailRef = useRef<HTMLInputElement | null>(null);
