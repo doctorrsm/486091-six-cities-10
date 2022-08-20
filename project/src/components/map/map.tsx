@@ -63,9 +63,15 @@ function Map({currentCity, points, mapClassName}: MapProps) {
   }, [map, points, selectedPointId, currentCity ]);
 
   useEffect(() => {
-    if (map) {
+    let isMounted = true;
+
+    if (map && isMounted) {
       map.flyTo({lat: currentCity.location.latitude, lng: currentCity.location.longitude}, currentCity.location.zoom);
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [map, currentCity]);
 
 
