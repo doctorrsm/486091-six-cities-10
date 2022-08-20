@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Сергей Рутковский](https://up.htmlacademy.ru/react/10/user/486091).
-* Наставник: [Антон Попов](https://htmlacademy.ru/profile/joker).
+* Наставник: [Владимир Ульянов](https://htmlacademy.ru/profile/lionskape).
 
 ---
 
