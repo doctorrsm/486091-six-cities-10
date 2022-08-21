@@ -31,9 +31,17 @@ function RoomScreen(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchOfferAction(Number((params.id))));
-    dispatch(fetchNearbyOffersAction(String(params.id)));
-    dispatch(fetchReviewsAction(String(params.id)));
+    let isMounted = true;
+
+    if (isMounted) {
+      dispatch(fetchOfferAction(Number((params.id))));
+      dispatch(fetchNearbyOffersAction(String(params.id)));
+      dispatch(fetchReviewsAction(String(params.id)));
+    }
+    return () => {
+      isMounted = false;
+    };
+
   }, [dispatch, params.id,]);
 
   const offer = useAppSelector(getCurrentOffer);
