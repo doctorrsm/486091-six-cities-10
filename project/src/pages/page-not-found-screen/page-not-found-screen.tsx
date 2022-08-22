@@ -1,3 +1,6 @@
+import { Link } from 'react-router-dom';
+import {AppRoute} from '../../const';
+
 function PageNotFoundScreen(): JSX.Element {
   return (
     <div style={{
@@ -12,7 +15,7 @@ function PageNotFoundScreen(): JSX.Element {
     }}
     >
       <p>404 Not Found</p>
-      <a href="">Home page</a>
+      <Link to={AppRoute.Root}>Home page</Link>
     </div>
 
   );
