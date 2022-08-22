@@ -5,15 +5,7 @@ function ScrollToTop() {
   const {pathname} = useLocation();
 
   useEffect(() => {
-    let isMounted = true;
-
-    if (isMounted) {
-      window.scrollTo(0, 0);
-    }
-
-    return () => {
-      isMounted = false;
-    };
+    window.scrollTo(0, 0);
 
   }, [pathname]);
 
