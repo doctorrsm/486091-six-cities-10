@@ -1,6 +1,7 @@
 import {City, Offer, Review} from '../types/offers';
 import {SortTypes} from '../const';
 import {CityCoordinates} from '../types/city-coordinates';
+import {toast} from 'react-toastify';
 
 export const capitalizeFirstLetter = (string: string) => string.charAt(0).toUpperCase() + string.slice(1);
 
@@ -46,3 +47,9 @@ export const sortOffers = (offers: Offer[], SortType: string) => {
 export const findCityByName = (cityName: string | null, cities: CityCoordinates[]) => cities.find((item:City) => item.name === cityName);
 
 export const getCityNamesFromOffers = (offers: Offer[]) => [...new Set(offers.map((item) => item.city.name))];
+
+export const showApiError = (requestType:string, err: unknown): void => {
+  let message = 'Unknown Error';
+  if (err instanceof Error) {message = `${requestType} ${err.message} ${err.name} ${err.cause}`;}
+  toast.error(message);
+};
