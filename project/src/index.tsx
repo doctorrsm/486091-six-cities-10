@@ -5,10 +5,7 @@ import {Provider} from 'react-redux';
 import {store} from './store';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {checkAuthAction, fetchFavoriteOffersAction, fetchOffersAction} from './store/api-actions';
-import {useAppSelector} from './hooks';
-import {getAuthorizationStatus} from './store/user-process/selectors';
-import {AuthorizationStatus} from './const';
+import {checkAuthAction, fetchOffersAction} from './store/api-actions';
 
 store.dispatch(checkAuthAction());
 store.dispatch(fetchOffersAction());
