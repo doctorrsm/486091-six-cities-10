@@ -3,7 +3,7 @@ import Reviews from '../../components/reviews/reviews';
 import {useParams} from 'react-router-dom';
 import Header from '../../components/header/header';
 import Rating from '../../components/rating/rating';
-import {AuthorizationStatus, cardClassNames, CardTypes, RequestStatus} from '../../const';
+import {AppRoute, AuthorizationStatus, cardClassNames, CardTypes, RequestStatus} from '../../const';
 import {capitalizeFirstLetter} from '../../tools/tools';
 import List from '../../components/list/list';
 import PremiumLabel from '../../components/premium-label/premium-label';
@@ -20,15 +20,23 @@ import {useEffect} from 'react';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {getOffersNearby} from '../../store/offers-nearby-data/selectors';
 import {getCurrentOffer, getOfferRequestStatus} from '../../store/offer-data/selectors';
-import {getReviews} from '../../store/reviews-data/selectors';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 import PageNotFoundScreen from '../page-not-found-screen/page-not-found-screen';
 import {getFavoriteChangeRequestStatus} from '../../store/favorite-process/selectors';
+import {resetReviewRequestStatus} from '../../store/reviews-data/reviews-data';
+import {resetCurrentOffer} from '../../store/offer-data/offer-data';
+import {redirectToRoute} from '../../store/action';
 
 
 function RoomScreen(): JSX.Element {
   const params = useParams();
   const dispatch = useAppDispatch();
+
+  const offer = useAppSelector(getCurrentOffer);
+  const nearbyOffers = useAppSelector(getOffersNearby);
+  const offerRequestStatus = useAppSelector(getOfferRequestStatus);
+  const favoriteChangeRequestStatus = useAppSelector(getFavoriteChangeRequestStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
     let isMounted = true;
@@ -40,16 +48,11 @@ function RoomScreen(): JSX.Element {
     }
     return () => {
       isMounted = false;
+      dispatch(resetReviewRequestStatus());
+      dispatch(resetCurrentOffer());
     };
 
   }, [dispatch, params.id,]);
-
-  const offer = useAppSelector(getCurrentOffer);
-  const nearbyOffers = useAppSelector(getOffersNearby);
-  const reviews = useAppSelector(getReviews);
-  const offerRequestStatus = useAppSelector(getOfferRequestStatus);
-  const authorisationStatus = useAppSelector(getAuthorizationStatus);
-  const favoriteChangeRequestStatus = useAppSelector(getFavoriteChangeRequestStatus);
 
   if (offerRequestStatus === RequestStatus.Rejected ) {
     return (
@@ -82,8 +85,15 @@ function RoomScreen(): JSX.Element {
                   type="button"
                   onClick={(evt) => {
                     evt.preventDefault();
-                    dispatch(changeFavoriteOfferStatusAction({offerId: offer.id, isFavorite: Number(!offer.isFavorite)}));
-                    dispatch(fetchOfferAction(Number((params.id))));
+                    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+                      dispatch(redirectToRoute(AppRoute.Login));
+                    } else {
+                      dispatch(changeFavoriteOfferStatusAction({
+                        offerId: offer.id,
+                        isFavorite: Number(!offer.isFavorite)
+                      }));
+                      dispatch(fetchOfferAction(Number((params.id))));
+                    }
                   }}
                   disabled={favoriteChangeRequestStatus === RequestStatus.Pending}
                 >
@@ -134,18 +144,21 @@ function RoomScreen(): JSX.Element {
                   </p>
                 </div>
               </div>
-              {(authorisationStatus === AuthorizationStatus.Auth) && reviews.length > 0 && <Reviews reviews={reviews}/>}
+              {/*{(authorisationStatus === AuthorizationStatus.Auth) && reviews.length > 0 && <Reviews reviews={reviews}/>}*/}
+              {<Reviews />}
             </div>
           </div>
-          <Map currentCity={offer.city} points={nearbyOffers} mapClassName={'property'}/>
+          {nearbyOffers.length > 0 &&
+            <Map currentCity={offer.city} points={nearbyOffers} mapClassName={'property'}/>}
         </section>
         <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">
-                Other places in the neighbourhood
-            </h2>
-            <PlaceCardList offers={ nearbyOffers} cardType={CardTypes.NearPlaces} />
-          </section>
+          {nearbyOffers.length > 0 &&
+            <section className="near-places places">
+              <h2 className="near-places__title">
+              Other places in the neighbourhood
+              </h2>
+              <PlaceCardList offers={nearbyOffers} cardType={CardTypes.NearPlaces}/>
+            </section>}
         </div>
       </main>
     </div>
