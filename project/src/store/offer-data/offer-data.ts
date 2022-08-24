@@ -21,6 +21,10 @@ export const offerData = createSlice({
     setFormData: (state, action) => {
       state.formData = action.payload;
     },
+    resetCurrentOffer: (state) => {
+      state.currentOffer = null;
+      state.offerRequestStatus = RequestStatus.Idle;
+    },
   },
   extraReducers(builder) {
     builder
@@ -49,4 +53,4 @@ export const offerData = createSlice({
       });
   }});
 
-export const {changeReviewRequestStatus, setFormData} = offerData.actions;
+export const {changeReviewRequestStatus, setFormData, resetCurrentOffer} = offerData.actions;
