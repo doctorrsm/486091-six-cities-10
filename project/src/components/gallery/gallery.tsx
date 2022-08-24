@@ -3,6 +3,9 @@ type Props = {
 };
 
 function Gallery({images}: Props): JSX.Element{
+  if (images.length > 6) {
+    images = images.slice(0,6);
+  }
   return (
     <div className="property__gallery">
       {images.map((image, index): JSX.Element => (
