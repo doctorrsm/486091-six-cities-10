@@ -6,9 +6,13 @@ import {store} from './store';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {checkAuthAction, fetchFavoriteOffersAction, fetchOffersAction} from './store/api-actions';
+import {useAppSelector} from './hooks';
+import {getAuthorizationStatus} from './store/user-process/selectors';
+import {AuthorizationStatus} from './const';
+
 store.dispatch(checkAuthAction());
 store.dispatch(fetchOffersAction());
-store.dispatch(fetchFavoriteOffersAction());
+//store.dispatch(fetchFavoriteOffersAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -19,7 +23,7 @@ root.render(
     <Provider store={store}>
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={355000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

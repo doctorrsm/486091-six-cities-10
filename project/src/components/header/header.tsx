@@ -7,6 +7,7 @@ import {getAuthorizationStatus, getUser} from '../../store/user-process/selector
 
 function Header(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
   const user = useAppSelector(getUser);
   // const user = useAppSelector(getUser);
   // const favoriteOffers = useAppSelector(getFavoriteOffers);
