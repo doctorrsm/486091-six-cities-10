@@ -56,11 +56,13 @@ function PlaceCard({offer, isActive, onMouseOver, onMouseOut, cardType}: Props):
               if (authorizationStatus === AuthorizationStatus.NoAuth) {
                 dispatch(redirectToRoute(AppRoute.Login));
               }
+              else {
 
-              dispatch(changeFavoriteOfferStatusAction({offerId: offer.id, isFavorite: Number(!offer.isFavorite)}));
-              dispatch(fetchOffersAction);
-              if(cardType === CardTypes.NearPlaces && params.id) {
-                dispatch(fetchNearbyOffersAction(params.id));
+                dispatch(changeFavoriteOfferStatusAction({offerId: offer.id, isFavorite: Number(!offer.isFavorite)}));
+                dispatch(fetchOffersAction);
+                if(cardType === CardTypes.NearPlaces && params.id) {
+                  dispatch(fetchNearbyOffersAction(params.id));
+                }
               }
             }}
           >
