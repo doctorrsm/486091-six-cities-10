@@ -20,11 +20,14 @@ export const reviewsData = createSlice({
     builder
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
         state.reviews = action.payload;
+        state.reviewRequestStatus = RequestStatus.Fulfilled;
       })
       .addCase(fetchReviewsAction.rejected, (state) => {
         state.reviews = [];
+        state.reviewRequestStatus = RequestStatus.Rejected;
       })
       .addCase(sendReviewAction.pending, (state) => {
+        state.reviewRequestStatus = RequestStatus.Pending;
         state.reviewRequestStatus = RequestStatus.Pending;
       })
       .addCase(sendReviewAction.fulfilled, (state, action) => {

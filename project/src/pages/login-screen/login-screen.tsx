@@ -8,7 +8,6 @@ import {toast} from 'react-toastify';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 import {redirectToRoute} from '../../store/action';
 
-
 const passwordRegExp = new RegExp(/(?=.*[0-9])(?=.*[A-Za-z])[0-9A-Za-z]{2,}/);
 
 function LoginScreen(): JSX.Element {
@@ -23,7 +22,6 @@ function LoginScreen(): JSX.Element {
 
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));

@@ -8,6 +8,7 @@ import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import {saveToken, dropToken} from '../services/token';
 import {ReviewData} from '../types/review-data';
+import {showApiError} from '../tools/tools';
 
 
 export const fetchOffersAction = createAsyncThunk<Offer[], undefined, {
@@ -17,8 +18,14 @@ export const fetchOffersAction = createAsyncThunk<Offer[], undefined, {
 }>(
   'data/fetchOffers',
   async (_arg, {dispatch, extra: api}) => {
-    const {data} = await api.get<Offer[]>(APIRoute.Offers);
-    return data;
+    try {
+      const {data} = await api.get<Offer[]>(APIRoute.Offers);
+      return data;
+    }
+    catch(err) {
+      showApiError('data/fetchOffers', err);
+      throw err;
+    }
   },
 );
 
@@ -29,9 +36,14 @@ export const fetchOfferAction = createAsyncThunk<Offer, number, {
 }>(
   'data/loadOffer',
   async (id, {dispatch, extra: api}) => {
-
-    const {data} = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
-    return data;
+    try {
+      const {data} = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
+      return data;
+    }
+    catch(err) {
+      showApiError('data/loadOffer', err);
+      throw err;
+    }
   },
 );
 
@@ -42,8 +54,14 @@ export const fetchNearbyOffersAction = createAsyncThunk<Offer[], string, {
 }>(
   'data/fetchNearbyOffers',
   async (id, {dispatch, extra: api}) => {
-    const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
-    return data;
+    try {
+      const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
+      return data;
+    }
+    catch(err) {
+      showApiError('data/fetchNearbyOffers', err);
+      throw err;
+    }
   }
 );
 
@@ -54,8 +72,14 @@ export const fetchReviewsAction = createAsyncThunk<Review[], string, {
 }>(
   'data/fetchReviews',
   async (id, {dispatch, extra: api}) => {
-    const {data} = await api.get<Review[]>(`${APIRoute.Reviews}/${id}`);
-    return data;
+    try {
+      const {data} = await api.get<Review[]>(`${APIRoute.Reviews}/${id}`);
+      return data;
+    }
+    catch(err) {
+      showApiError('data/fetchReviews', err);
+      throw err;
+    }
   }
 );
 
@@ -66,9 +90,15 @@ export const sendReviewAction = createAsyncThunk<Review, ReviewData, {
 }>(
   'data/sendReview',
   async ({id, comment, rating}, {dispatch, extra: api}) => {
-    const{data} = await api.post<Review>(`${APIRoute.Reviews}/${id}`, {comment, rating});
-    dispatch(fetchReviewsAction(String(id)));
-    return data;
+    try {
+      const{data} = await api.post<Review>(`${APIRoute.Reviews}/${id}`, {comment, rating});
+      dispatch(fetchReviewsAction(String(id)));
+      return data;
+    }
+    catch(err) {
+      showApiError('data/sendReview', err);
+      throw err;
+    }
   },
 );
 
@@ -81,6 +111,7 @@ export const checkAuthAction = createAsyncThunk<UserData, undefined, {
   'user/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get(APIRoute.Login);
+    dispatch(fetchFavoriteOffersAction());
     return data;
   },
 );
@@ -92,10 +123,16 @@ export const loginAction = createAsyncThunk<UserData, AuthData, {
 }>(
   'user/login',
   async ({ email, password}, {dispatch, extra: api}) => {
-    const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
-    saveToken(data.token);
-    dispatch(redirectToRoute(AppRoute.Root));
-    return data;
+    try {
+      const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
+      saveToken(data.token);
+      dispatch(redirectToRoute(AppRoute.Root));
+      return data;
+    }
+    catch(err) {
+      showApiError('user/login', err);
+      throw err;
+    }
   },
 );
 
@@ -106,8 +143,15 @@ export const logoutAction = createAsyncThunk<void, undefined, {
 }>(
   'user/logout',
   async (_arg, {dispatch, extra: api}) => {
-    await api.delete(APIRoute.Logout);
-    dropToken();
+    try {
+      await api.delete(APIRoute.Logout);
+      dropToken();
+      dispatch(fetchOffersAction());
+    }
+    catch(err) {
+      showApiError('user/logout', err);
+      throw err;
+    }
   },
 );
 
@@ -118,8 +162,14 @@ export const fetchFavoriteOffersAction = createAsyncThunk<Offer[], undefined, {
 }>(
   'data/FavoriteOffersAction',
   async (_arg, {dispatch, extra: api}) => {
-    const {data} = await api.get<Offer[]>(APIRoute.Favorite);
-    return data;
+    try {
+      const {data} = await api.get<Offer[]>(APIRoute.Favorite);
+      return data;
+    }
+    catch(err) {
+      showApiError('data/FavoriteOffersAction', err);
+      throw err;
+    }
   },
 );
 
@@ -130,10 +180,16 @@ export const changeFavoriteOfferStatusAction = createAsyncThunk<Offer[], ChangeF
 }>(
   'data/changeFavoriteOffersAction',
   async ({offerId, isFavorite}, {dispatch, extra: api}) => {
-    const {data} = await api.post<Offer[]>(`${APIRoute.Favorite}/${offerId}/${isFavorite}`, {offerId, isFavorite});
-    dispatch(fetchOffersAction());
-    dispatch(fetchFavoriteOffersAction());
-    // dispatch(setFormData(FORM_DATA_INIT_STATE));
-    return data;
+    try {
+      const {data} = await api.post<Offer[]>(`${APIRoute.Favorite}/${offerId}/${isFavorite}`, {offerId, isFavorite});
+      dispatch(fetchOffersAction());
+      dispatch(fetchFavoriteOffersAction());
+      return data;
+    }
+    catch(err) {
+      showApiError('data/changeFavoriteOffersAction', err);
+      throw err;
+    }
+
   },
 );
