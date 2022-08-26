@@ -12,13 +12,16 @@ store.dispatch(fetchOffersAction());
 function FavoritesScreen(): JSX.Element {
 
   const favoriteOffers = useAppSelector(getFavoriteOffers);
-
+  const isFavoriteOffers = favoriteOffers.length > 0;
   return (
-    <div className={`page ${favoriteOffers ? '' : 'favorites--empty'}`}>
+    <div className={`page ${isFavoriteOffers || 'favorites--empty'}`}>
       <Header />
       <main className={`page__main page__main--favorites ${favoriteOffers ? '' : 'page__main--favorites-empty'}`}>
         <div className="page__favorites-container container">
-          {favoriteOffers.length > 0 ? <FavoritesList offers={favoriteOffers}/> : <FavoritesEmpty />}
+          <section className={`favorites ${isFavoriteOffers || 'favorites--empty'}`}>
+            {isFavoriteOffers && <FavoritesList offers={favoriteOffers}/> }
+            {!isFavoriteOffers && <FavoritesEmpty />}
+          </section>
         </div>
       </main>
       <Footer />
