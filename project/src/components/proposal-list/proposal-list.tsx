@@ -28,4 +28,4 @@ function ProposalList({offers}: Props): JSX.Element {
   );
 }
 
-export default ProposalList;
+export default React.memo(ProposalList);

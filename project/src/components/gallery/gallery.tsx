@@ -1,3 +1,5 @@
+import React from 'react';
+
 type Props = {
   images: string[]
 };
@@ -17,4 +19,4 @@ function Gallery({images}: Props): JSX.Element{
   );
 }
 
-export default Gallery;
+export default React.memo(Gallery);

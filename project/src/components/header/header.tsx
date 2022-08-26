@@ -4,6 +4,7 @@ import {useAppSelector} from '../../hooks';
 import {AuthorizationStatus} from '../../const';
 import GuestNavigation from '../guest-navigation/guest-navigation';
 import {getAuthorizationStatus, getUser} from '../../store/user-process/selectors';
+import React from 'react';
 
 function Header(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
@@ -31,4 +32,4 @@ function Header(): JSX.Element {
   );
 }
 
-export default Header;
+export default React.memo(Header);
