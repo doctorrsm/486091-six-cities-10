@@ -1,3 +1,5 @@
+import React from 'react';
+
 function CitiesNoPlaces(): JSX.Element {
 
   return(
@@ -15,4 +17,4 @@ function CitiesNoPlaces(): JSX.Element {
   );
 }
 
-export default CitiesNoPlaces;
+export default React.memo(CitiesNoPlaces);

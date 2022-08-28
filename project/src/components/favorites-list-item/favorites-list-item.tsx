@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {Offer} from '../../types/offers';
 import PlaceCard from '../place-card/place-card';
 
@@ -11,15 +12,17 @@ function FavoritesListItem({offers, city}: Props) {
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
-          <a className="locations__item-link" href="#">
+          <Link className="locations__item-link" to="#">
             <span>{city}</span>
-          </a>
+          </Link>
         </div>
       </div>
       <div className="favorites__places">
         {offers.map((offer:Offer) => {
           if (city === offer.city.name) {
             return (<PlaceCard offer={offer} key={offer.id} cardType={'favorites'} isActive={false}/>);
+          } else {
+            return null;
           }
         })}
       </div>

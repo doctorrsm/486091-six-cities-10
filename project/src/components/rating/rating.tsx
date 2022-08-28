@@ -9,7 +9,7 @@ function Rating({rating, cardType}: Props): JSX.Element {
   return (
     <div className={`${cardType}__rating rating`}>
       <div className={`${cardType}__stars rating__stars`}>
-        <span style={renderRatingWidth(rating)}></span>
+        <span style={renderRatingWidth(rating)}/>
         <span className="visually-hidden">Rating</span>
       </div>
     </div>

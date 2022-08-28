@@ -1,14 +1,12 @@
 import {Offer} from '../../types/offers';
 import {getCityNamesFromOffers} from '../../tools/tools';
 import FavoritesListItem from '../favorites-list-item/favorites-list-item';
-// import {Cities} from '../../const';
-// import FavoritesListItem from '../favorites-list-item/favorites-list-item';
 
-type Props = {
+type FavoritesListProps = {
   offers: Offer[],
 }
 
-function FavoritesList({offers}: Props): JSX.Element {
+function FavoritesList({offers}: FavoritesListProps): JSX.Element {
   const cityNames = getCityNamesFromOffers(offers);
   return (
     <>

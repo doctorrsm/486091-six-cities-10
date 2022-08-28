@@ -12,7 +12,7 @@ function Gallery({images}: Props): JSX.Element{
     <div className="property__gallery">
       {images.map((image, index): JSX.Element => (
         <div className="property__image-wrapper" key={image}>
-          <img className="property__image" src={image} alt="Photo studio"/>
+          <img className="property__image" src={image} alt="Property studio"/>
         </div>
       ))}
     </div>

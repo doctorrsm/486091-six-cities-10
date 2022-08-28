@@ -4,7 +4,7 @@ import {fetchOffersAction} from '../api-actions';
 import {NameSpace, RequestStatus} from '../../const';
 
 const initialState: OffersData = {
-  offers: [],
+  offers: null,
   offersRequestStatus: RequestStatus.Idle,
 };
 

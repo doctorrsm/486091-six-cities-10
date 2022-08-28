@@ -15,12 +15,14 @@ export type UserProcess = {
 };
 
 export type AppProcess = {
-  currentCity: string;
-  sortType: string;
-  activeCardId: number;
-}
+  currentCity: string,
+  sortType: string,
+  activeCardId: number,
+};
+
 export type FormData = {
-  review: string, rating: number
+  review: string,
+  rating: number,
 }
 export type OfferData = {
   offerRequestStatus: RequestStatus,
@@ -31,29 +33,29 @@ export type OfferData = {
 };
 
 export type OffersData = {
-  offers: Offer[],
+  offers: Offer[] | null,
   offersRequestStatus: RequestStatus,
-}
+};
 
 export type OffersNearbyData = {
   nearbyOffers: Offer[],
-}
+};
 
 export type ReviewsData = {
-  reviews: Review[];
-  reviewRequestStatus: RequestStatus;
+  reviews: Review[],
+  reviewRequestStatus: RequestStatus,
 };
 
 export type FavoriteOffers = {
-  favoriteOffers: Offer[];
-  favoriteRequestStatus: RequestStatus;
-  favoriteChangeRequestStatus: RequestStatus;
+  favoriteOffers: Offer[],
+  favoriteRequestStatus: RequestStatus,
+  favoriteChangeRequestStatus: RequestStatus,
 };
 
 export type ChangeFavorites = {
   offerId: number,
   isFavorite: number,
-}
+};
 
 export type State = ReturnType<typeof store.getState>;
 
