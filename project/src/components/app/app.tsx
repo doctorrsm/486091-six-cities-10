@@ -1,27 +1,18 @@
 import {Route, Routes} from 'react-router-dom';
 import MainScreen from '../../pages/main-screen/main-screen';
-import {AppRoute, AuthorizationStatus, RequestStatus} from '../../const';
+import {AppRoute} from '../../const';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import RoomScreen from '../../pages/room-screen/room-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import PageNotFoundScreen from '../../pages/page-not-found-screen/page-not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
-import {useAppSelector} from '../../hooks';
-import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
-import {getAuthorizationStatus} from '../../store/user-process/selectors';
-import {getOffersRequestStatus} from '../../store/offers-data/selectors';
+import React from 'react';
 
 
 function App(): JSX.Element {
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const offersRequestStatus = useAppSelector(getOffersRequestStatus);
-
-  if (offersRequestStatus === RequestStatus.Idle || authorizationStatus === AuthorizationStatus.Unknown) {
-    return <LoadingScreen />;
-  }
 
   return (
     <HistoryRouter history={browserHistory}>
@@ -34,7 +25,7 @@ function App(): JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute authorizationStatus={authorizationStatus}>
+            <PrivateRoute>
               <FavoritesScreen />
             </PrivateRoute>
           }
@@ -56,4 +47,4 @@ function App(): JSX.Element {
   );
 }
 
-export default App;
+export default React.memo(App);

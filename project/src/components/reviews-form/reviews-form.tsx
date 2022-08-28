@@ -25,8 +25,8 @@ function ReviewsForm() {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    dispatch(sendReviewAction({ id: Number(params.id), comment: formData.review, rating: formData.rating})).
-      then((data) => {
+    dispatch(sendReviewAction({ id: Number(params.id), comment: formData.review, rating: formData.rating}))
+      .then((data) => {
         const target = evt.target as HTMLFormElement;
         if(data.meta.requestStatus.toUpperCase() === RequestStatus.Fulfilled) {
           target.reset();

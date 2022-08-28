@@ -1,5 +1,5 @@
 export type ReviewData = {
-  id: number;
-  comment: string;
-  rating: number;
+  id: number,
+  comment: string,
+  rating: number,
 };

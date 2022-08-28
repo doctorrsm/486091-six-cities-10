@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {SortTypes} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {getSortType} from '../../store/app-process/selectors';
@@ -24,7 +24,7 @@ function SortFilter():JSX.Element {
 
   return (
     <form className="places__sorting" action="#" method="get">
-      <span className="places__sorting-caption">Sort by</span>
+      <span className="places__sorting-caption">Sort by </span>
       <span className="places__sorting-type" tabIndex={0} onClick={handleToggleFormClick}>
         {selectedSortValue}
         <svg className="places__sorting-arrow" width="7" height="4">

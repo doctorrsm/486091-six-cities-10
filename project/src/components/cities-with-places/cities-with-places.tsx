@@ -6,18 +6,21 @@ import SortFilter from '../sort-filter/sort-filter';
 import {sortOffers} from '../../tools/tools';
 import {getCurrentCity, getSortType} from '../../store/app-process/selectors';
 import {getOffers} from '../../store/offers-data/selectors';
+import {Offer} from '../../types/offers';
 
 
 function CitiesWithPlaces(): JSX.Element {
 
   const currentCity = useAppSelector(getCurrentCity);
   const offers = useAppSelector(getOffers);
-  const filteredByNameOffers = offers.filter((offer) => offer.city.name === currentCity);
+  let filteredByNameOffers: Offer[] = [];
+  if (offers !== null) {
+    filteredByNameOffers = offers.filter((offer) => offer.city.name === currentCity);
+  }
+
   const placesCount = filteredByNameOffers ? filteredByNameOffers.length : 0;
 
   const selectedSortValue = useAppSelector(getSortType);
-
-  // const [selectedSortValue, setSelectedSortValue] = useState<SortTypes>(SortTypes.Default);
 
   const sortFilteredOffers = sortOffers(filteredByNameOffers, selectedSortValue);
 

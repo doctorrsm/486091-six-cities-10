@@ -10,8 +10,7 @@ function Header(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const user = useAppSelector(getUser);
-  // const user = useAppSelector(getUser);
-  // const favoriteOffers = useAppSelector(getFavoriteOffers);
+  const isUserAuth = ((authorizationStatus === AuthorizationStatus.Auth) && (user !== null));
   return (
     <header className="header">
       <div className="container">
@@ -21,9 +20,8 @@ function Header(): JSX.Element {
           </div>
           <nav className="header__nav">
             <ul className="header__nav-list">
-              {((authorizationStatus === AuthorizationStatus.Auth) && (user !== null))
-                ? <UserNavigation />
-                : <GuestNavigation />}
+              {isUserAuth && <UserNavigation />}
+              {!isUserAuth && <GuestNavigation />}
             </ul>
           </nav>
         </div>

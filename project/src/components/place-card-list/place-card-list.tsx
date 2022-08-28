@@ -14,7 +14,6 @@ type PlaceCardProps = {
 function PlaceCardList({offers, cardType}: PlaceCardProps): JSX.Element {
 
   const isCitiesCard = cardType === 'cities';
-  const isFavoritesCard = cardType === 'favorites';
   const isNearPlaceCard = cardType === 'near-places';
 
   const dispatch = useAppDispatch();
@@ -35,13 +34,6 @@ function PlaceCardList({offers, cardType}: PlaceCardProps): JSX.Element {
             />
           ))}
         </div>}
-
-      {isFavoritesCard &&
-        <ul className="favorites__list">
-          {/*{*/}
-          {/*  Cities.map((city) => (<FavoritesListItem offers={offers} key={city.name} city={city.name} />))*/}
-          {/*}*/}
-        </ul>}
 
       {isNearPlaceCard &&
         <div className='near-places__list places__list'>

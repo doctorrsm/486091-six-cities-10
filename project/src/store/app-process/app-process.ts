@@ -1,9 +1,9 @@
-import {projectCities, NameSpace, SortTypes} from '../../const';
+import {ProjectCities, NameSpace, SortTypes} from '../../const';
 import {createSlice} from '@reduxjs/toolkit';
 import {AppProcess} from '../../types/state';
 
 const initialState: AppProcess = {
-  currentCity: projectCities.Paris,
+  currentCity: ProjectCities.Paris,
   sortType: SortTypes.Default,
   activeCardId: 0,
 };

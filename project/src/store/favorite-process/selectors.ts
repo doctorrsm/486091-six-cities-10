@@ -7,3 +7,6 @@ export const getFavoriteOffers = (state: State): Offer[] =>
 
 export const getFavoriteChangeRequestStatus = (state: State): string =>
   state[NameSpace.Favorites].favoriteChangeRequestStatus;
+
+export const getFavoriteRequestStatus = (state: State): string =>
+  state[NameSpace.Favorites].favoriteRequestStatus;

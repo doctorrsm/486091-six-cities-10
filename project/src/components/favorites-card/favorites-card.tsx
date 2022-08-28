@@ -4,11 +4,11 @@ import Rating from '../rating/rating';
 import {AppRoute, cardClassNames} from '../../const';
 import {generatePath, Link} from 'react-router-dom';
 
-type Props = {
+type FavoritesCardProps = {
   offer: Offer;
 }
 
-function FavoritesCard({offer}: Props): JSX.Element {
+function FavoritesCard({offer}: FavoritesCardProps): JSX.Element {
   return (
     <article className="favorites__card place-card">
       {offer.isPremium ? renderPremiumLabel() : ''}
@@ -17,7 +17,7 @@ function FavoritesCard({offer}: Props): JSX.Element {
           <img
             className="place-card__image"
             src={offer.previewImage}
-            alt="Place image"
+            alt={offer.title}
             width={150}
             height={110}
           />
