@@ -1,5 +1,7 @@
-export const URL_MARKER_DEFAULT = 'img/pin.svg';
-export const URL_MARKER_ACTIVE = 'img/pin-active.svg';
+export const enum UrlMarker {
+  Default = 'img/pin.svg',
+  Active = 'img/pin-active.svg'
+}
 
 export enum AppRoute {
   Favorites = '/favorites',
@@ -24,7 +26,7 @@ export const ProjectCities = {
   Dusseldorf: 'Dusseldorf'
 } as const;
 
-export const CityList = Object.keys(ProjectCities);
+export const cityList = Object.keys(ProjectCities);
 
 export enum CardTypes {
   Cities = 'cities',
@@ -97,6 +99,6 @@ export const enum RequestStatus {
 }
 
 export const TileLayerConfig = {
-  imageUrl: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+  ImageUrl: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
   Attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
 };

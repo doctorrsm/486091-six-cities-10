@@ -22,7 +22,7 @@ function useMap(
       });
 
       const layer = new TileLayer(
-        TileLayerConfig.imageUrl,
+        TileLayerConfig.ImageUrl,
         {
           attribution:
           TileLayerConfig.Attribution
