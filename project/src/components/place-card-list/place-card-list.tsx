@@ -38,14 +38,7 @@ function PlaceCardList({offers, cardType}: PlaceCardProps): JSX.Element {
       {isNearPlaceCard &&
         <div className='near-places__list places__list'>
           {offers.map((offer) => (
-            <PlaceCard
-              offer={offer}
-              key={offer.id}
-              isActive={offer.id === activeCardId}
-              onMouseOver={() => dispatch(changeActiveCardId(offer.id))}
-              onMouseOut={() => dispatch(changeActiveCardId(0))}
-              cardType={CardTypes.NearPlaces}
-            />
+            <PlaceCard offer={offer} key={offer.id} cardType={CardTypes.NearPlaces}/>
           ))}
         </div>}
 
