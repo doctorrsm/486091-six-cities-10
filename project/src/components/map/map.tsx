@@ -1,11 +1,10 @@
-
 import useMap from '../../hooks/use-map';
 import {useEffect, useRef} from 'react';
 import leaflet, {Icon, Marker} from 'leaflet';
 import {City, Points} from '../../types/offers';
 import 'leaflet/dist/leaflet.css';
 import {useAppSelector} from '../../hooks';
-import {URL_MARKER_ACTIVE, URL_MARKER_DEFAULT} from '../../const';
+import {UrlMarker} from '../../const';
 import L from 'leaflet';
 import {getActiveCardId} from '../../store/app-process/selectors';
 
@@ -16,15 +15,15 @@ type MapProps = {
 }
 
 const defaultCustomIcon = new Icon({
-  iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconUrl: UrlMarker.Default,
+  iconSize: [27, 39],
+  iconAnchor: [13, 39],
 });
 
 const currentCustomIcon = leaflet.icon({
-  iconUrl: URL_MARKER_ACTIVE,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconUrl: UrlMarker.Active,
+  iconSize: [27, 39],
+  iconAnchor: [13, 39],
 });
 
 function Map({currentCity, points, mapClassName}: MapProps) {

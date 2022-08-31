@@ -26,6 +26,7 @@ import {getFavoriteChangeRequestStatus} from '../../store/favorite-process/selec
 import {resetReviewRequestStatus} from '../../store/reviews-data/reviews-data';
 import {resetCurrentOffer} from '../../store/offer-data/offer-data';
 import {redirectToRoute} from '../../store/action';
+import {changeActiveCardId} from '../../store/app-process/app-process';
 
 
 function RoomScreen(): JSX.Element {
@@ -43,6 +44,7 @@ function RoomScreen(): JSX.Element {
 
     if (isMounted) {
       dispatch(fetchOfferAction(Number((params.id))));
+      dispatch(changeActiveCardId(Number(params.id)));
       dispatch(fetchNearbyOffersAction(String(params.id)));
       dispatch(fetchReviewsAction(String(params.id)));
     }
@@ -149,7 +151,7 @@ function RoomScreen(): JSX.Element {
             </div>
           </div>
           {nearbyOffers.length > 0 &&
-            <Map currentCity={offer.city} points={nearbyOffers} mapClassName={'property'}/>}
+            <Map currentCity={offer.city} points={nearbyOffers.concat(offer)} mapClassName={'property'}/>}
         </section>
         <div className="container">
           {nearbyOffers.length > 0 &&
