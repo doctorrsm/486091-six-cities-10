@@ -12,7 +12,7 @@ import {redirectToRoute} from '../../store/action';
 
 type Props = {
   offer: Offer;
-  isActive: boolean;
+  isActive?: boolean;
   onMouseOver?: () => void;
   onMouseOut?:() => void;
   cardType?: string;
@@ -74,7 +74,7 @@ function PlaceCard({offer, isActive, onMouseOver, onMouseOut, cardType}: Props):
         </div>
         <Rating rating={offer.rating} cardType={cardClassNames.PlaceCard} />
         <h2 className="place-card__name">
-          <Link to={`/Offer/${offer.id}`}>{offer.title}</Link>
+          <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{capitalizeFirstLetter(offer.type)}</p>
       </div>
