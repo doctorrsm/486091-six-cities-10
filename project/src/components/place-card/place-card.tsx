@@ -36,7 +36,7 @@ function PlaceCard({offer, isActive, onMouseOver, onMouseOut, cardType}: Props):
           <span>Premium</span>
         </div>}
       <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
-        <Link to={`/Offer/${offer.id}`} >
+        <Link to={`/offer/${offer.id}`} >
           <img className="place-card__image" src={offer.previewImage} width={isFavoritesCard ? '150' : '260' } height={isFavoritesCard ? '110' : '200' }
             alt={offer.title}
           />
