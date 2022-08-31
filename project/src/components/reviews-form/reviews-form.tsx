@@ -4,12 +4,9 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useParams} from 'react-router-dom';
 import {getFormData, getIsFormDisable, getReviewRequestStatus} from '../../store/offer-data/selectors';
 import {setFormData} from '../../store/offer-data/offer-data';
-import {RequestStatus} from '../../const';
+import {RequestStatus, ReviewLength} from '../../const';
 import {resetReviewRequestStatus} from '../../store/reviews-data/reviews-data';
 import {toast} from 'react-toastify';
-
-const MIN_REVIEW_LENGTH = 50;
-const MAX_REVIEW_LENGTH = 300;
 
 function ReviewsForm() {
   const formData = useAppSelector(getFormData);
@@ -152,7 +149,7 @@ function ReviewsForm() {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={isDisabled || formData.review.length < MIN_REVIEW_LENGTH || formData.review.length > MAX_REVIEW_LENGTH || !formData.rating}
+          disabled={isDisabled || formData.review.length < ReviewLength.Min || formData.review.length > ReviewLength.Max || !formData.rating}
         >
           Submit
         </button>
